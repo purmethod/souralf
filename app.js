@@ -63,6 +63,16 @@
   shortScreen.addEventListener('change', configureStory);
   configureStory();
 
+  // Fetch the remaining moments before they enter the sticky stage.
+  if (story && 'IntersectionObserver' in window) {
+    const preload = new IntersectionObserver(entries => {
+      if (!entries.some(entry => entry.isIntersecting)) return;
+      story.querySelectorAll('img').forEach(image => { image.loading = 'eager'; });
+      preload.disconnect();
+    }, {rootMargin: '100% 0px'});
+    preload.observe(story);
+  }
+
   // The floating action is keyboard accessible only while it is visible.
   const dock = document.querySelector('.dock');
   if (dock && 'IntersectionObserver' in window) {
