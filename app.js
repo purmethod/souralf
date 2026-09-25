@@ -7,6 +7,15 @@
   const controls = [...document.querySelectorAll('[data-moment]')];
   let active = -1;
   let enhanced = false;
+  let storyVisible = false;
+
+  function syncVideo() {
+    story?.querySelectorAll('video').forEach(video => {
+      const visible = !enhanced || video.closest('.story-frame').classList.contains('is-active');
+      if (storyVisible && visible && !reducedMotion.matches) video.play().catch(() => {});
+      else video.pause();
+    });
+  }
 
   function selectMoment(index) {
     if (active === index) return;
@@ -17,6 +26,7 @@
     });
     controls.forEach((button, i) => button.setAttribute('aria-pressed', String(i === index)));
     active = index;
+    syncVideo();
   }
 
   function configureStory() {
@@ -41,6 +51,29 @@
   shortScreen.addEventListener('change', configureStory);
   configureStory();
 
+  if (story && 'IntersectionObserver' in window) {
+    const videoVisibility = new IntersectionObserver(entries => {
+      storyVisible = entries.some(entry => entry.isIntersecting);
+      syncVideo();
+    }, {threshold: 0.15});
+    videoVisibility.observe(story);
+  }
+
+  // Preserve the product page's quantity in the existing adoption email.
+  const quantity = document.querySelector('.qty-value');
+  const adoption = document.querySelector('.adopt-link');
+  if (quantity && adoption) {
+    const base = adoption.getAttribute('href');
+    let amount = 1;
+    document.querySelectorAll('.qty-btn').forEach(button => {
+      button.addEventListener('click', () => {
+        amount = Math.min(9, Math.max(1, amount + Number(button.dataset.step)));
+        quantity.textContent = String(amount);
+        adoption.setAttribute('href', base.replace('Quantity%3A%201', `Quantity%3A%20${amount}`));
+      });
+    });
+  }
+
   // Fetch the remaining moments before they enter the photo stage.
   if (story && 'IntersectionObserver' in window) {
     const preload = new IntersectionObserver(entries => {
@@ -62,6 +95,6 @@
       dock.setAttribute('aria-hidden', String(!visible));
       dock.tabIndex = visible ? 0 : -1;
     });
-    document.querySelectorAll('.hero, .story, .box, .foot').forEach(section => observer.observe(section));
+    document.querySelectorAll('.hero, .story, .box, .product, .foot').forEach(section => observer.observe(section));
   }
 })();

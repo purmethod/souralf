@@ -67,7 +67,7 @@ button { font: inherit; }
 .band i { display: inline-block; margin: 0 1.5rem; font-style: normal; color: #bdc2a2; }
 @keyframes band { to { transform: translateX(-50%); } }
 
-/* Real photographs, enhanced into a scroll story only when motion is welcome. */
+/* Original media in a compact, manually controlled story. */
 .story { background: var(--night); color: var(--paper); }
 .story-stage { padding: 3.5rem var(--edge) 2rem; }
 .story-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; margin-bottom: 2rem; }
@@ -76,7 +76,7 @@ button { font: inherit; }
 .story-skip { font-size: .75rem; text-decoration: none; padding: .7rem 0; white-space: nowrap; }
 .story-skip:hover { text-decoration: underline; text-underline-offset: .35em; }
 .story-frames { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem 2rem; }
-.story-frame img { width: 100%; aspect-ratio: 4/5; height: auto; object-fit: cover; background: #8d8170; }
+.story-frame img, .story-frame video { width: 100%; aspect-ratio: 4/5; height: auto; object-fit: cover; background: #8d8170; }
 .story-frame figcaption { padding: 1.5rem 0 0; }
 .frame-number { font-family: var(--mono); font-size: .65rem; color: #c0c5ac; letter-spacing: .06em; }
 .story-frame h3 { font-family: var(--mono); font-size: clamp(2rem, 4.2vw, 4.3rem); font-weight: 400; line-height: 1.1; letter-spacing: -.06em; margin: 1.15rem 0 1.3rem; }
@@ -89,9 +89,9 @@ button { font: inherit; }
 .story-ready .story-frames { position: relative; display: block; min-height: 0; }
 .story-ready .story-frame { position: absolute; inset: 0; display: grid; grid-template-columns: 40% 1fr; gap: 5%; opacity: 0; visibility: hidden; transition: opacity 650ms var(--ease), visibility 650ms; }
 .story-ready .story-frame.is-active { opacity: 1; visibility: visible; }
-.story-ready .story-frame img { grid-column: 2; grid-row: 1; height: 100%; min-height: 0; aspect-ratio: auto; object-position: center; }
+.story-ready .story-frame img, .story-ready .story-frame video { grid-column: 2; grid-row: 1; height: 100%; min-height: 0; aspect-ratio: auto; object-position: center; }
 .story-ready .story-frame figcaption { grid-column: 1; grid-row: 1; align-self: center; padding: 0; }
-.story-ready .story-controls { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 1.5rem; }
+.story-ready .story-controls { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1rem; margin-top: 1.5rem; }
 .story-controls button { display: flex; gap: .8rem; align-items: center; min-height: 2.8rem; padding: .65rem 0 0; border: 0; border-top: 2px solid #ffffff30; color: #b3b7a6; background: none; font-size: .75rem; cursor: pointer; transition: color .3s, border-color .3s; text-align: left; }
 .story-controls button span { font-family: var(--mono); font-size: .6rem; }
 .story-controls button[aria-pressed="true"] { color: white; border-color: #d0d7b5; }
@@ -151,7 +151,7 @@ button { font: inherit; }
   .story-ready .story-stage { padding-top: 1.4rem; min-height: 34rem; }
   .story-ready .story-head { margin-bottom: 1rem; }
   .story-ready .story-frame { grid-template-columns: 1fr; grid-template-rows: minmax(0, 1fr) auto; gap: .9rem; }
-  .story-ready .story-frame img { grid-column: 1; grid-row: 1; }
+  .story-ready .story-frame img, .story-ready .story-frame video { grid-column: 1; grid-row: 1; }
   .story-ready .story-frame figcaption { grid-column: 1; grid-row: 2; }
   .story-ready .story-frame h3 { font-size: clamp(1.4rem, 5.5vw, 2rem); margin: .35rem 0 .3rem; }
   .story-ready .story-frame h3 br { display: none; }
@@ -186,10 +186,36 @@ button { font: inherit; }
   .story-ready .story-stage { position: static; height: auto; min-height: 0; padding-block: 3rem; }
   .story-ready .story-frames { display: grid; }
   .story-ready .story-frame { position: static; display: block; opacity: 1; visibility: visible; }
-  .story-ready .story-frame img { height: auto; aspect-ratio: 4/5; }
+  .story-ready .story-frame img, .story-ready .story-frame video { height: auto; aspect-ratio: 4/5; }
   .story-ready .story-frame figcaption { padding-top: 1.25rem; }
   .story-ready .story-controls { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+
+/* The concurrently added product page shares the same visual language. */
+.product { display: grid; grid-template-columns: 1fr 1fr; align-items: center; min-height: calc(100svh - var(--bar)); }
+.product-photo img { width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; background: var(--beige); }
+.product-info { display: grid; justify-items: start; gap: 1rem; width: 100%; max-width: 38rem; margin: 0 auto; padding: 3rem var(--edge); text-transform: uppercase; letter-spacing: .04em; }
+.box-kicker { font-size: .72rem; font-weight: 600; color: var(--muted); }
+.box-title { font-family: var(--mono); font-size: clamp(2rem, 3.6vw, 3.5rem); font-weight: 400; line-height: 1.1; letter-spacing: -.06em; }
+.product .box-block { width: 100%; margin: .5rem 0; }
+.product .contents { margin-top: .7rem; }
+.product .contents li { display: block; padding: .55rem 0; font-family: var(--mono); font-size: .8rem; }
+.product .contents span { display: block; margin-top: .2rem; color: var(--muted); font-family: var(--sans); font-size: .65rem; }
+.product-info .button { width: 100%; }
+.qty { display: inline-flex; align-items: center; background: var(--beige); border-radius: .2rem; }
+.qty-btn { width: 3rem; height: 3rem; border: 0; background: transparent; color: var(--ink); font-size: 1.4rem; cursor: pointer; }
+.qty-btn:hover { background: #dedfd1; }
+.qty-value { min-width: 2.5rem; font-family: var(--mono); text-align: center; }
+.foot-icons { display: flex; gap: 1rem; }
+.foot-icons a { display: grid; place-items: center; width: 2.75rem; height: 2.75rem; }
+.foot-icons svg { width: 1.3rem; height: 1.3rem; }
+@media (max-width: 799px) {
+  .product { grid-template-columns: 1fr; }
+  .product-info { padding: 2.5rem var(--edge) 3.5rem; }
+  .story-ready .story-controls { gap: .4rem; }
+  .story-controls button { gap: .25rem; font-size: .63rem; }
+  .story-controls button span { font-size: .5rem; }
 }
