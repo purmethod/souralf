@@ -279,7 +279,27 @@ a {
 }
 
 .shot {
+  position: relative;
   scroll-snap-align: start;
+}
+
+.shot:has(video) {
+  cursor: pointer;
+}
+
+/* shown only when the phone blocked autoplay (e.g. Low Power Mode) */
+.shot.is-paused::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 6.5v11l9-5.5z' fill='%23111'/%3E%3C/svg%3E") center / 1.6rem no-repeat;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
 }
 
 .shot img,

@@ -32,8 +32,8 @@
     <script>document.documentElement.classList.add("js");</script>
     <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
     <link rel="preload" as="image" href="assets/photos/bread-1080.jpg" imagesrcset="assets/photos/bread-720.jpg 720w, assets/photos/bread-1080.jpg 1080w" imagesizes="(min-width: 960px) 50vw, 100vw" />
-    <link rel="stylesheet" href="styles.css?v=6" />
-    <script src="app.js?v=6" defer></script>
+    <link rel="stylesheet" href="styles.css?v=7" />
+    <script src="app.js?v=7" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -66,7 +66,7 @@
       <section class="proof" id="bread" aria-label="From ÂLF to bread">
         <div class="series">
           <figure class="shot">
-            <video poster="assets/video/starter-poster.jpg" width="720" height="900" autoplay muted loop playsinline preload="metadata" aria-label="ÂLF, the living sourdough culture, full of bubbles">
+            <video class="loop" poster="assets/video/starter-poster.jpg" width="720" height="900" autoplay muted loop playsinline webkit-playsinline preload="auto" disableremoteplayback aria-label="ÂLF, the living sourdough culture, bubbling and rising">
               <source src="assets/video/starter.mp4" type="video/mp4" />
               <source src="assets/video/starter.webm" type="video/webm" />
             </video>
@@ -75,7 +75,10 @@
             <img src="assets/photos/dough-720.jpg" srcset="assets/photos/dough-720.jpg 720w, assets/photos/dough-1080.jpg 1080w" sizes="(min-width: 720px) 25vw, 80vw" width="1080" height="1350" alt="Rye dough with ÂLF, before fermentation" loading="lazy" decoding="async" />
           </figure>
           <figure class="shot">
-            <img src="assets/photos/risen-720.jpg" srcset="assets/photos/risen-720.jpg 720w, assets/photos/risen-1080.jpg 1080w" sizes="(min-width: 720px) 25vw, 80vw" width="1080" height="1350" alt="The same dough, risen: the flour layer breaks open on its own" loading="lazy" decoding="async" />
+            <video class="loop" poster="assets/video/risen-poster.jpg" width="720" height="900" autoplay muted loop playsinline webkit-playsinline preload="auto" disableremoteplayback aria-label="The risen dough: the flour layer has cracked open on its own">
+              <source src="assets/video/risen.mp4" type="video/mp4" />
+              <source src="assets/video/risen.webm" type="video/webm" />
+            </video>
           </figure>
           <figure class="shot">
             <img src="assets/photos/bread-720.jpg" srcset="assets/photos/bread-720.jpg 720w, assets/photos/bread-1080.jpg 1080w" sizes="(min-width: 720px) 25vw, 80vw" width="1080" height="1350" alt="The finished loaf with its natural cracked crust" loading="lazy" decoding="async" />

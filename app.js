@@ -42,15 +42,29 @@
     blockers.forEach((el) => io.observe(el));
   }
 
-  /* ---------- the ÂLF video: no motion for people who asked for none ---------- */
+  /* ---------- videos: play when visible, tap to pause/play ---------- */
+  // iPhones in Low Power Mode block autoplay: then a play mark shows and one tap starts it.
 
   function initVideo() {
-    document.querySelectorAll("video[autoplay]").forEach((v) => {
-      if (motion.matches) {
-        v.removeAttribute("autoplay");
-        v.pause();
-      }
+    const vids = [...document.querySelectorAll("video.loop")];
+    if (!vids.length) return;
+    const setState = (v) => v.parentElement.classList.toggle("is-paused", v.paused);
+    const tryPlay = (v) => {
+      v.muted = true;
+      const p = v.play();
+      if (p && p.catch) p.catch(() => setState(v));
+    };
+    vids.forEach((v) => {
+      v.addEventListener("play", () => setState(v));
+      v.addEventListener("pause", () => setState(v));
+      v.parentElement.addEventListener("click", () => (v.paused ? tryPlay(v) : v.pause()));
     });
+    if (!hasIO) return vids.forEach(tryPlay);
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => (e.isIntersecting ? tryPlay(e.target) : e.target.pause())),
+      { threshold: 0.2 }
+    );
+    vids.forEach((v) => io.observe(v));
   }
 
   /* ---------- product page: quantity goes into the adoption email ---------- */
