@@ -22,7 +22,9 @@ scripts/check.mjs   pre-push check (syntax, links, sizes, brand spelling)
 
 ## Images
 
-The site currently has **no images**, on purpose: typography only. Real product photos can be added later.
+`assets/photos/` holds Paul's **real photographs** (dough → risen → bread), graded only:
+white balance, tone, contrast, crop to 4:5, light grain. Nothing generated, nothing added.
+Each file stays around 300 KB (720 px and 1080 px versions, served via `srcset`).
 No generated or AI imagery. Never.
 
 ## Local

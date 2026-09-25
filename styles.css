@@ -193,28 +193,38 @@ a {
 /* ---------- hero ---------- */
 
 .hero {
-  display: grid;
-  place-items: center;
-  min-height: calc(100vh - 5.5rem);
-  min-height: calc(100svh - 5.5rem); /* the black band peeks in below */
-  padding: calc(var(--bar) + env(safe-area-inset-top) + 2rem) var(--edge) 3rem;
+  padding-top: calc(var(--bar) + env(safe-area-inset-top));
+}
+
+.hero-photo {
+  /* photo takes what is left, so headline + button always fit on the first screen */
+  height: clamp(14rem, calc(100vh - 24rem), 56vh);
+  height: clamp(14rem, calc(100svh - 24rem), 56svh);
+  overflow: hidden;
+  background: var(--night);
+}
+
+.hero-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .hero-copy {
   display: grid;
   justify-items: center;
-  gap: 1.25rem;
-  width: 100%;
+  gap: 1rem;
+  padding: 2.25rem var(--edge) 3rem;
   text-align: center;
 }
 
 .hero .mono-xl {
-  font-size: clamp(3.2rem, 15vw, 9rem);
+  font-size: clamp(3rem, 14vw, 7.5rem);
 }
 
 .hero-line {
-  margin-bottom: 1rem;
-  font-size: clamp(1.15rem, 4.6vw, 1.5rem);
+  margin-bottom: 0.75rem;
+  font-size: clamp(1.1rem, 4.4vw, 1.4rem);
 }
 
 /* ---------- band ---------- */
@@ -389,6 +399,50 @@ a {
   background: var(--night-ink);
   transform: scaleX(var(--p, 0));
   transform-origin: 0 50%;
+}
+
+/* ---------- from ÂLF to bread ---------- */
+
+.proof {
+  padding: clamp(5rem, 16vw, 9rem) var(--edge);
+  text-align: center;
+}
+
+.triptych {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 80%;
+  gap: 0.75rem;
+  margin: 3rem calc(var(--edge) * -1) 0;
+  padding: 0 var(--edge);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 0 var(--edge);
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.triptych::-webkit-scrollbar {
+  display: none;
+}
+
+.shot {
+  scroll-snap-align: start;
+}
+
+.shot img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  border-radius: 0.75rem;
+  object-fit: cover;
+  background: var(--beige);
+}
+
+.shot figcaption {
+  padding-top: 0.8rem;
+  font-family: var(--mono);
+  font-size: 1.1rem;
 }
 
 /* ---------- statement ---------- */
@@ -603,12 +657,41 @@ a {
 /* ---------- tablet + desktop ---------- */
 
 @media (min-width: 720px) {
+  .triptych {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 72rem;
+    margin: 3.5rem auto 0;
+    padding: 0;
+    overflow: visible;
+  }
+
   .ritual {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (min-width: 960px) {
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 100vh;
+    min-height: 100svh;
+  }
+
+  .hero-photo {
+    height: auto;
+    min-height: 100%;
+  }
+
+  .hero-copy {
+    align-content: center;
+  }
+
+  .hero .mono-xl {
+    font-size: clamp(3.5rem, 6vw, 6.5rem);
+  }
+
   .ritual {
     grid-template-columns: repeat(4, 1fr);
     gap: 2rem;

@@ -31,8 +31,9 @@
     </script>
     <script>document.documentElement.classList.add("js");</script>
     <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="styles.css?v=3" />
-    <script src="app.js?v=3" defer></script>
+    <link rel="preload" as="image" href="assets/photos/bread-1080.jpg" imagesrcset="assets/photos/bread-720.jpg 720w, assets/photos/bread-1080.jpg 1080w" imagesizes="(min-width: 960px) 50vw, 100vw" />
+    <link rel="stylesheet" href="styles.css?v=4" />
+    <script src="app.js?v=4" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -45,6 +46,9 @@
     <main id="main">
       <!-- HERO -->
       <section class="hero" id="top" aria-labelledby="hero-title">
+        <figure class="hero-photo">
+          <img src="assets/photos/bread-1080.jpg" srcset="assets/photos/bread-720.jpg 720w, assets/photos/bread-1080.jpg 1080w" sizes="(min-width: 960px) 50vw, 100vw" width="1080" height="1350" alt="A loaf baked with ÂLF: rye crust, flour, natural cracks" fetchpriority="high" decoding="async" />
+        </figure>
         <div class="hero-copy">
           <p class="label">Born in Germany</p>
           <h1 id="hero-title" class="mono-xl">Meet ÂLF.</h1>
@@ -88,6 +92,28 @@
             <li class="step"><span class="step-no">08</span><span class="step-title">Bread.</span></li>
           </ol>
           <div class="meter" aria-hidden="true"><span></span></div>
+        </div>
+      </section>
+
+      <!-- FROM ÂLF TO BREAD: Paul's real photographs -->
+      <section class="proof" id="bread" aria-labelledby="proof-title">
+        <header class="section-head">
+          <h2 id="proof-title" class="mono-lg">From ÂLF to bread.</h2>
+          <p class="lede">No knife. No scoring. The cracks are ÂLF's own.</p>
+        </header>
+        <div class="triptych">
+          <figure class="shot">
+            <img src="assets/photos/dough-720.jpg" srcset="assets/photos/dough-720.jpg 720w, assets/photos/dough-1080.jpg 1080w" sizes="(min-width: 720px) 33vw, 80vw" width="1080" height="1350" alt="Rye dough with ÂLF, before fermentation" loading="lazy" decoding="async" />
+            <figcaption>01 Dough.</figcaption>
+          </figure>
+          <figure class="shot">
+            <img src="assets/photos/risen-720.jpg" srcset="assets/photos/risen-720.jpg 720w, assets/photos/risen-1080.jpg 1080w" sizes="(min-width: 720px) 33vw, 80vw" width="1080" height="1350" alt="The same dough, risen: the flour layer breaks open on its own" loading="lazy" decoding="async" />
+            <figcaption>02 Risen.</figcaption>
+          </figure>
+          <figure class="shot">
+            <img src="assets/photos/bread-720.jpg" srcset="assets/photos/bread-720.jpg 720w, assets/photos/bread-1080.jpg 1080w" sizes="(min-width: 720px) 33vw, 80vw" width="1080" height="1350" alt="The finished loaf with its natural cracked crust" loading="lazy" decoding="async" />
+            <figcaption>03 Bread.</figcaption>
+          </figure>
         </div>
       </section>
 

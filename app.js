@@ -45,7 +45,7 @@
 
   function initReveals() {
     if (motion.matches) return;
-    const els = document.querySelectorAll(".litany li, .section-head, .contents li, .ritual li, .statement .mono-lg");
+    const els = document.querySelectorAll(".litany li, .section-head, .contents li, .ritual li, .shot, .statement .mono-lg");
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
