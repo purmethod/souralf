@@ -9,13 +9,13 @@ const fail = [];
 
 execFileSync(process.execPath, ['--check', path.join(root, 'app.js')]);
 
-for (const page of ['index.html', '404.html']) {
+for (const page of ['index.html', 'box.html', '404.html']) {
   const html = fs.readFileSync(path.join(root, page), 'utf8');
   for (const [, ref] of html.matchAll(/(?:src|href)="([^"#]+)"/g)) {
     if (/^(https?:|mailto:|data:)/.test(ref)) continue;
     const file = path.join(root, ref.split('?')[0].replace(/^\//, '')) ;
     if (ref === '/' ) continue;
-    if (!fs.existsSync(file)) fail.push(`${page}: missing ${ref}`);
+    if (!fs.existsSync(file) && !fs.existsSync(file + '.html')) fail.push(`${page}: missing ${ref}`);
   }
 }
 

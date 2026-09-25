@@ -1,18 +1,16 @@
-// ÂLF: reveals, floating adopt button. Vanilla, no dependencies.
+// ÂLF: reveals, floating adopt button, video, quantity. Vanilla, no dependencies.
 (() => {
   const doc = document.documentElement;
   const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-  if (!("IntersectionObserver" in window)) {
-    doc.classList.remove("js");
-    return;
-  }
+  const hasIO = "IntersectionObserver" in window;
+  if (!hasIO) doc.classList.remove("js");
 
   /* ---------- reveals ---------- */
 
   function initReveals() {
-    if (motion.matches) return;
-    const els = document.querySelectorAll(".section-head, .shot, .statement .mono-lg");
+    if (!hasIO || motion.matches) return;
+    const els = document.querySelectorAll(".shot, .statement .mono-lg, .box-block");
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
@@ -34,8 +32,8 @@
 
   function initDock() {
     const dock = document.querySelector(".dock");
-    const blockers = document.querySelectorAll(".hero, .statement, .box, .foot");
-    if (!dock) return;
+    const blockers = document.querySelectorAll(".hero, .statement, .box, .product, .foot");
+    if (!dock || !hasIO) return;
     const showing = new Set();
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => (e.isIntersecting ? showing.add(e.target) : showing.delete(e.target)));
@@ -44,6 +42,36 @@
     blockers.forEach((el) => io.observe(el));
   }
 
+  /* ---------- the ÂLF video: no motion for people who asked for none ---------- */
+
+  function initVideo() {
+    document.querySelectorAll("video[autoplay]").forEach((v) => {
+      if (motion.matches) {
+        v.removeAttribute("autoplay");
+        v.pause();
+      }
+    });
+  }
+
+  /* ---------- product page: quantity goes into the adoption email ---------- */
+
+  function initQuantity() {
+    const out = document.querySelector(".qty-value");
+    const link = document.querySelector(".adopt-link");
+    if (!out || !link) return;
+    const base = link.getAttribute("href");
+    let n = 1;
+    document.querySelectorAll(".qty-btn").forEach((btn) =>
+      btn.addEventListener("click", () => {
+        n = Math.min(9, Math.max(1, n + Number(btn.dataset.step)));
+        out.textContent = String(n);
+        link.setAttribute("href", base.replace("Quantity%3A%201", `Quantity%3A%20${n}`));
+      })
+    );
+  }
+
+  initVideo();
+  initQuantity();
   initReveals();
   initDock();
 })();

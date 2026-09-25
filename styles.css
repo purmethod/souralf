@@ -110,11 +110,6 @@ a {
   text-transform: uppercase;
 }
 
-.lede {
-  max-width: 30ch;
-  margin: 1.25rem auto 0;
-  font-size: 1.1rem;
-}
 
 /* ---------- controls ---------- */
 
@@ -145,13 +140,6 @@ a {
   transform: scale(0.985);
 }
 
-.text-link {
-  display: inline-block;
-  padding: 0.75rem 0;
-  font-weight: 700;
-  text-transform: uppercase;
-  text-underline-offset: 0.3em;
-}
 
 /* ---------- header ---------- */
 
@@ -252,10 +240,6 @@ a {
 
 /* ---------- sections ---------- */
 
-.section-head {
-  max-width: 44rem;
-  margin: 0 auto;
-}
 
 /* reveal (only when scripting is available) */
 .js .reveal {
@@ -272,16 +256,16 @@ a {
 /* ---------- from ÂLF to bread ---------- */
 
 .proof {
-  padding: clamp(3.5rem, 12vw, 6rem) var(--edge) 0;
+  padding: clamp(2.5rem, 8vw, 4rem) var(--edge) 0;
   text-align: center;
 }
 
-.triptych {
+.series {
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: 80%;
   gap: 0.75rem;
-  margin: 3rem calc(var(--edge) * -1) 0;
+  margin: 0 calc(var(--edge) * -1);
   padding: 0 var(--edge);
   overflow-x: auto;
   scroll-snap-type: x mandatory;
@@ -290,7 +274,7 @@ a {
   -webkit-overflow-scrolling: touch;
 }
 
-.triptych::-webkit-scrollbar {
+.series::-webkit-scrollbar {
   display: none;
 }
 
@@ -298,19 +282,15 @@ a {
   scroll-snap-align: start;
 }
 
-.shot img {
+.shot img,
+.shot video {
+  display: block;
   width: 100%;
   height: auto;
   aspect-ratio: 4 / 5;
   border-radius: 0.75rem;
   object-fit: cover;
   background: var(--beige);
-}
-
-.shot figcaption {
-  padding-top: 0.8rem;
-  font-family: var(--mono);
-  font-size: 1.1rem;
 }
 
 /* ---------- statement ---------- */
@@ -327,32 +307,56 @@ a {
   max-width: 14ch;
 }
 
-.attrib {
-  margin-bottom: 1rem;
-}
-
 /* ---------- box ---------- */
 
 .box {
   display: grid;
   justify-items: center;
-  gap: 1.25rem;
-  padding: clamp(3.5rem, 12vw, 6rem) var(--edge);
-  text-align: center;
+  padding: clamp(3rem, 10vw, 5rem) var(--edge) clamp(4rem, 12vw, 6rem);
+}
+
+/* one clean block: left-aligned capitals, centred on the page */
+.box-block {
+  display: grid;
+  justify-items: start;
+  gap: 0.9rem;
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.box-kicker {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.box-title {
+  margin-bottom: 0.75rem;
+  font-family: var(--mono);
+  font-size: clamp(1.9rem, 8vw, 3rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  word-spacing: -0.25em;
+  line-height: 1.1;
 }
 
 .contents {
   display: grid;
-  gap: 0.35rem;
-}
-
-.contents b {
+  gap: 0.45rem;
+  margin-bottom: 1.25rem;
+  font-size: 1rem;
   font-weight: 700;
 }
 
-.fine {
-  margin-top: 0.5rem;
+.contents span {
+  display: block;
   color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.box-block .button {
+  justify-self: stretch;
 }
 
 /* ---------- footer ---------- */
@@ -433,11 +437,11 @@ a {
 /* ---------- tablet + desktop ---------- */
 
 @media (min-width: 720px) {
-  .triptych {
+  .series {
     grid-auto-flow: row;
-    grid-template-columns: repeat(3, 1fr);
-    max-width: 72rem;
-    margin: 3.5rem auto 0;
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 80rem;
+    margin: 0 auto;
     padding: 0;
     overflow: visible;
   }
@@ -479,5 +483,86 @@ a {
   .js .reveal {
     opacity: 1;
     transform: none;
+  }
+}
+
+/* ---------- product page ---------- */
+
+.product {
+  padding-top: calc(var(--bar) + env(safe-area-inset-top));
+}
+
+.product-photo img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  background: var(--beige);
+}
+
+/* left-aligned block, like a shop product page */
+.product-info {
+  display: grid;
+  justify-items: start;
+  gap: 1rem;
+  width: 100%;
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: 2.5rem var(--edge) 4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.product-info .box-block {
+  margin-top: 0.5rem;
+}
+
+.product-info .button {
+  justify-self: stretch;
+  width: 100%;
+  max-width: none;
+}
+
+.qty {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 0.75rem;
+  background: var(--beige);
+}
+
+.qty-btn {
+  width: 3.25rem;
+  height: 3.25rem;
+  border: 0;
+  border-radius: 0.75rem;
+  color: var(--ink);
+  background: transparent;
+  font: inherit;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+.qty-btn:hover {
+  background: var(--beige-deep);
+}
+
+.qty-value {
+  min-width: 2.5rem;
+  font-family: var(--mono);
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+@media (min-width: 960px) {
+  .product {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    min-height: 100vh;
+    min-height: 100svh;
+  }
+
+  .product-info {
+    padding: 3rem var(--edge);
   }
 }
