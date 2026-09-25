@@ -9,7 +9,7 @@ Vercel publishes `main` to https://souralf.com and creates previews for branches
 
 ## Design and photographs
 
-A warm off-white canvas, charcoal, oversized monospace typography and the founder’s real sourdough photographs. The loaf opens the page; a four-moment scroll sequence follows the dough through its natural cracks to the baked crust.
+A warm off-white canvas, charcoal, oversized monospace typography and the founder’s real sourdough photographs. The loaf opens the page; a compact, four-moment interactive photo sequence follows the dough through its natural cracks to the baked crust.
 
 Original photographs supplied by the owner:
 
@@ -22,7 +22,7 @@ Each photo is encoded at 640px and 1152px widths for responsive delivery. Origin
 
 The concurrently added JPEG variants in `assets/photos/` and the real-loaf `assets/og.jpg` share image are retained. The landing page uses the four original photos as responsive WebP assets; link previews use the existing landscape share image.
 
-The story uses four still photographs, not an invented continuous timelapse. Reduced motion, short screens and JavaScript disabled all receive a complete static gallery. The story also has labeled navigation buttons and a link to skip to the box.
+The story uses four still photographs, not an invented continuous timelapse. Reduced motion, short screens and JavaScript disabled all receive a complete static gallery. The story has labeled navigation buttons and a link to skip to the box. It occupies one screen rather than pinning the visitor through a long scroll. The page follows the concurrent main-branch shortening: hero, band, photo story, box, footer.
 
 ## Local checks
 
@@ -39,4 +39,4 @@ Always write **ÂLF**. Only technical slugs (domain, repo and Instagram handle) 
 
 ## Conversion
 
-Adoption buttons guide visitors to the final adoption section. Its button opens the existing prefilled email to brinkmannbuild@gmail.com. No checkout, price or availability is invented.
+Adoption buttons guide visitors to the box. Its button opens the existing prefilled email to brinkmannbuild@gmail.com. No checkout, price or availability is invented.

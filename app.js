@@ -5,9 +5,7 @@
   const story = document.querySelector('.story');
   const frames = [...document.querySelectorAll('.story-frame')];
   const controls = [...document.querySelectorAll('[data-moment]')];
-  const bar = document.querySelector('.bar');
   let active = -1;
-  let frameRequest = 0;
   let enhanced = false;
 
   function selectMoment(index) {
@@ -21,26 +19,12 @@
     active = index;
   }
 
-  function updateStory() {
-    frameRequest = 0;
-    if (!story || !enhanced) return;
-    const rect = story.getBoundingClientRect();
-    const stage = story.querySelector('.story-stage');
-    const travel = rect.height - stage.getBoundingClientRect().height;
-    const progress = Math.max(0, Math.min(1, (bar.getBoundingClientRect().height - rect.top) / Math.max(travel, 1)));
-    selectMoment(Math.min(frames.length - 1, Math.floor(progress * frames.length)));
-  }
-
-  function scheduleStory() {
-    if (!frameRequest && enhanced) frameRequest = requestAnimationFrame(updateStory);
-  }
-
   function configureStory() {
     if (!story || !frames.length) return;
     enhanced = !reducedMotion.matches && !shortScreen.matches;
     story.classList.toggle('story-ready', enhanced);
     active = -1;
-    if (enhanced) updateStory();
+    if (enhanced) selectMoment(0);
     else {
       frames.forEach(frame => frame.removeAttribute('aria-hidden'));
       selectMoment(0);
@@ -50,20 +34,14 @@
   controls.forEach((button, index) => {
     button.addEventListener('click', () => {
       if (!enhanced) return;
-      const rect = story.getBoundingClientRect();
-      const stageHeight = story.querySelector('.story-stage').getBoundingClientRect().height;
-      const target = window.scrollY + rect.top - bar.getBoundingClientRect().height;
-      const position = (index + .45) / frames.length;
-      window.scrollTo({top: target + (rect.height - stageHeight) * position, behavior: 'smooth'});
+      selectMoment(index);
     });
   });
-  window.addEventListener('scroll', scheduleStory, {passive: true});
-  window.addEventListener('resize', scheduleStory);
   reducedMotion.addEventListener('change', configureStory);
   shortScreen.addEventListener('change', configureStory);
   configureStory();
 
-  // Fetch the remaining moments before they enter the sticky stage.
+  // Fetch the remaining moments before they enter the photo stage.
   if (story && 'IntersectionObserver' in window) {
     const preload = new IntersectionObserver(entries => {
       if (!entries.some(entry => entry.isIntersecting)) return;
@@ -84,6 +62,6 @@
       dock.setAttribute('aria-hidden', String(!visible));
       dock.tabIndex = visible ? 0 : -1;
     });
-    document.querySelectorAll('.hero, .story, .box, .adopt, .foot').forEach(section => observer.observe(section));
+    document.querySelectorAll('.hero, .story, .box, .foot').forEach(section => observer.observe(section));
   }
 })();
