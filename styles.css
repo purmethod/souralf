@@ -185,6 +185,8 @@ a {
 }
 
 .hero-photo {
+  position: relative;
+  cursor: pointer;
   /* photo takes what is left, so headline + button always fit on the first screen */
   height: clamp(14rem, calc(100vh - 24rem), 56vh);
   height: clamp(14rem, calc(100svh - 24rem), 56svh);
@@ -192,7 +194,9 @@ a {
   background: var(--night);
 }
 
-.hero-photo img {
+.hero-photo img,
+.hero-photo video {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -288,7 +292,8 @@ a {
 }
 
 /* shown only when the phone blocked autoplay (e.g. Low Power Mode) */
-.shot.is-paused::after {
+.shot.is-paused::after,
+.hero-photo.is-paused::after {
   content: "";
   position: absolute;
   top: 50%;
