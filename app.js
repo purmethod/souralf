@@ -48,20 +48,34 @@
   function initVideo() {
     const vids = [...document.querySelectorAll("video.loop")];
     if (!vids.length) return;
-    const setState = (v) => v.parentElement.classList.toggle("is-paused", v.paused);
+    // The play mark shows only when the phone blocked autoplay or the viewer paused by tap,
+    // never for our own off-screen pause.
+    const mark = (v, on) => v.parentElement.classList.toggle("is-paused", on);
     const tryPlay = (v) => {
       v.muted = true;
       const p = v.play();
-      if (p && p.catch) p.catch(() => setState(v));
+      if (p && p.catch) p.catch(() => mark(v, true));
     };
     vids.forEach((v) => {
-      v.addEventListener("play", () => setState(v));
-      v.addEventListener("pause", () => setState(v));
-      v.parentElement.addEventListener("click", () => (v.paused ? tryPlay(v) : v.pause()));
+      v.addEventListener("play", () => mark(v, false));
+      v.parentElement.addEventListener("click", () => {
+        if (v.paused) {
+          v.dataset.held = "";
+          tryPlay(v);
+        } else {
+          v.dataset.held = "1";
+          v.pause();
+          mark(v, true);
+        }
+      });
     });
     if (!hasIO) return vids.forEach(tryPlay);
     const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => (e.isIntersecting ? tryPlay(e.target) : e.target.pause())),
+      (entries) =>
+        entries.forEach((e) => {
+          if (!e.isIntersecting) e.target.pause();
+          else if (!e.target.dataset.held) tryPlay(e.target);
+        }),
       { threshold: 0.2 }
     );
     vids.forEach((v) => io.observe(v));
