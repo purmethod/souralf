@@ -87,7 +87,7 @@
   const CRUST_DEEP = [70, 40, 22];
   const CRACK_DOUGH = [92, 78, 63];
   const CRACK_BAKED = [52, 30, 17];
-  const BOARD = [18, 16, 13]; // = page night colour, so the canvas has no visible edge
+  const BOARD = [17, 17, 17]; // = page night colour, so the canvas has no visible edge
   const EMBER = [74, 32, 12];
 
   /* ---------- bubbles (vector, drawn on top of the surface) ---------- */
@@ -278,7 +278,7 @@
         const edgeR = 1 + f.wobble[((ang / TAU) * 360) | 0] * wobAmp;
         // background: page colour, soft contact shadow, oven glow while baking
         const sd = Math.hypot(x - sx, y - sy) / R;
-        const sh = 0.35 + 0.65 * ss(0.92, 1.45, sd);
+        const sh = mix(0.35 + 0.65 * ss(0.92, 1.45, sd), 1, 1 - ss(0, W * 0.16, Math.min(x, y, W - 1 - x, H - 1 - y)));
         const glow = s.heat * (1 - ss(0.96, 1.14, Math.sqrt(r2)));
         const bgR = mix(BOARD[0], EMBER[0], glow) * sh;
         const bgG = mix(BOARD[1], EMBER[1], glow) * sh;
@@ -489,7 +489,7 @@
     function spawn(b, t, fresh) {
       b.x = r() * W;
       b.y = r() * H;
-      b.max = (3 + Math.pow(r(), 2.4) * 30) * (W / 600);
+      b.max = (3 + Math.pow(r(), 2.4) * 30) * (Math.min(W, H, 900) / 600);
       b.grow = 3 + r() * 6;
       b.hold = 1 + r() * 4;
       b.fade = 3 + r() * 3;
@@ -619,7 +619,7 @@
 
   function initReveals() {
     const els = document.querySelectorAll(
-      ".litany li, .meet .essence, .section-head, .contents li, .ritual li, .shot, .adopt .display"
+      ".litany li, .section-head, .contents li, .ritual li, .shot, .statement .mono-lg"
     );
     if (!("IntersectionObserver" in window)) return;
     const io = new IntersectionObserver(
@@ -637,21 +637,6 @@
       el.style.transitionDelay = `${(i % 5) * 70}ms`;
       io.observe(el);
     });
-  }
-
-  function initBar() {
-    const bar = document.querySelector(".bar");
-    const dark = document.querySelectorAll(".transform, .adopt");
-    if (!bar) return;
-    const over = new Set();
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => (e.isIntersecting ? over.add(e.target) : over.delete(e.target)));
-        bar.classList.toggle("on-dark", over.size > 0);
-      },
-      { rootMargin: "0px 0px -100% 0px" } // only what sits under the bar
-    );
-    dark.forEach((el) => io.observe(el));
   }
 
   function initDock() {
@@ -674,7 +659,6 @@
   }
 
   initReveals();
-  initBar();
   initDock();
   initHero();
 

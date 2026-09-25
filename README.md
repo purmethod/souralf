@@ -4,7 +4,8 @@ A living German sourdough culture. One product: **THE ÂLF BOX**. One action: **
 
 ## Stack
 
-- Plain HTML, CSS and JavaScript. No framework, no build step, no dependencies.
+- Plain HTML, CSS and JavaScript. No framework, no build step, no dependencies, no webfonts.
+- Visual reference: edocheesecake.com (white, monospace headlines, black scrolling band, beige rounded buttons, floating pill).
 - Hosted on **Vercel** as a static site (`vercel.json`: clean URLs, cache and security headers).
 - The hero surface, the scroll transformation and the fallback stills are drawn live on `<canvas>`
   by `app.js`: a procedural dough/crust renderer with no image downloads.
@@ -13,7 +14,7 @@ A living German sourdough culture. One product: **THE ÂLF BOX**. One action: **
 
 ```
 index.html          the page: hero → meet ÂLF → transformation → from ÂLF to bread → box → how it works → adopt
-styles.css          design system (off-white / ink, system serif + sans, mobile first)
+styles.css          design system (white / ink / beige, system mono + sans, mobile first)
 app.js              living surface, scroll story, reveals, adopt dock
 404.html            not-found page
 assets/og.jpg       1200×630 share image
