@@ -10,7 +10,7 @@
 
   function initReveals() {
     if (!hasIO || motion.matches) return;
-    const els = document.querySelectorAll(".shot, .statement .mono-lg, .box-block");
+    const els = document.querySelectorAll(".shot, .statement-line, .box-block");
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {

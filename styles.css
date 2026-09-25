@@ -323,8 +323,14 @@ a {
   text-align: center;
 }
 
-.statement .mono-lg {
-  max-width: 14ch;
+/* same typeface as the buttons and "Born in Germany" */
+.statement-line {
+  font-family: var(--sans);
+  font-size: clamp(1.5rem, 6.5vw, 2.6rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  text-transform: uppercase;
 }
 
 /* ---------- box ---------- */
@@ -390,6 +396,8 @@ a {
 }
 
 .foot-mark {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
   font-size: 2rem;
 }
 
