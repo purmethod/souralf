@@ -1,83 +1,79 @@
-// ÂLF: scroll story, reveals, floating adopt button. Vanilla, no dependencies.
+// ÂLF: the original photographs, one real moment at a time.
 (() => {
-  const doc = document.documentElement;
-  const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
-  const clamp = (x, a, b) => (x < a ? a : x > b ? b : x);
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const shortScreen = window.matchMedia('(max-height: 650px)');
+  const story = document.querySelector('.story');
+  const frames = [...document.querySelectorAll('.story-frame')];
+  const controls = [...document.querySelectorAll('[data-moment]')];
+  const bar = document.querySelector('.bar');
+  let active = -1;
+  let frameRequest = 0;
+  let enhanced = false;
 
-  if (!("IntersectionObserver" in window)) {
-    doc.classList.remove("js");
-    return;
+  function selectMoment(index) {
+    if (active === index) return;
+    frames.forEach((frame, i) => {
+      frame.classList.toggle('is-active', i === index);
+      if (enhanced) frame.setAttribute('aria-hidden', String(i !== index));
+      else frame.removeAttribute('aria-hidden');
+    });
+    controls.forEach((button, i) => button.setAttribute('aria-pressed', String(i === index)));
+    active = index;
   }
 
-  /* ---------- the transformation: one line per scroll step ---------- */
+  function updateStory() {
+    frameRequest = 0;
+    if (!story || !enhanced) return;
+    const rect = story.getBoundingClientRect();
+    const stage = story.querySelector('.story-stage');
+    const travel = rect.height - stage.getBoundingClientRect().height;
+    const progress = Math.max(0, Math.min(1, (bar.getBoundingClientRect().height - rect.top) / Math.max(travel, 1)));
+    selectMoment(Math.min(frames.length - 1, Math.floor(progress * frames.length)));
+  }
 
-  function initStory() {
-    const section = document.querySelector(".transform");
-    if (!section) return;
-    const stage = section.querySelector(".transform-stage");
-    const steps = [...section.querySelectorAll(".step")];
-    let active = -1;
-    let raf = 0;
+  function scheduleStory() {
+    if (!frameRequest && enhanced) frameRequest = requestAnimationFrame(updateStory);
+  }
 
-    function update() {
-      raf = 0;
-      const r = section.getBoundingClientRect();
-      const total = r.height - window.innerHeight;
-      const p = total > 0 ? clamp(-r.top / total, 0, 1) : 0;
-      stage.style.setProperty("--p", p.toFixed(4));
-      const idx = Math.min(steps.length - 1, Math.floor(p * steps.length));
-      if (idx === active) return;
-      if (active >= 0) steps[active].classList.remove("is-active");
-      steps[idx].classList.add("is-active");
-      steps.forEach((el, k) => el.setAttribute("aria-current", k === idx ? "step" : "false"));
-      active = idx;
+  function configureStory() {
+    if (!story || !frames.length) return;
+    enhanced = !reducedMotion.matches && !shortScreen.matches;
+    story.classList.toggle('story-ready', enhanced);
+    active = -1;
+    if (enhanced) updateStory();
+    else {
+      frames.forEach(frame => frame.removeAttribute('aria-hidden'));
+      selectMoment(0);
     }
-
-    const kick = () => {
-      if (!raf) raf = window.requestAnimationFrame(update);
-    };
-    window.addEventListener("scroll", kick, { passive: true });
-    window.addEventListener("resize", kick);
-    update();
   }
 
-  /* ---------- reveals ---------- */
-
-  function initReveals() {
-    if (motion.matches) return;
-    const els = document.querySelectorAll(".litany li, .section-head, .contents li, .ritual li, .statement .mono-lg");
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (!e.isIntersecting) return;
-          e.target.classList.add("is-in");
-          io.unobserve(e.target);
-        });
-      },
-      { rootMargin: "0px 0px -8% 0px" }
-    );
-    els.forEach((el, i) => {
-      el.classList.add("reveal");
-      el.style.transitionDelay = `${(i % 5) * 70}ms`;
-      io.observe(el);
+  controls.forEach((button, index) => {
+    button.addEventListener('click', () => {
+      if (!enhanced) return;
+      const rect = story.getBoundingClientRect();
+      const stageHeight = story.querySelector('.story-stage').getBoundingClientRect().height;
+      const target = window.scrollY + rect.top - bar.getBoundingClientRect().height;
+      const position = (index + .45) / frames.length;
+      window.scrollTo({top: target + (rect.height - stageHeight) * position, behavior: 'smooth'});
     });
-  }
+  });
+  window.addEventListener('scroll', scheduleStory, {passive: true});
+  window.addEventListener('resize', scheduleStory);
+  reducedMotion.addEventListener('change', configureStory);
+  shortScreen.addEventListener('change', configureStory);
+  configureStory();
 
-  /* ---------- floating adopt button: hidden where a CTA is already in view ---------- */
-
-  function initDock() {
-    const dock = document.querySelector(".dock");
-    const blockers = document.querySelectorAll(".hero, .transform, .box-cta, .adopt, .foot");
-    if (!dock) return;
-    const showing = new Set();
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => (e.isIntersecting ? showing.add(e.target) : showing.delete(e.target)));
-      dock.classList.toggle("is-visible", showing.size === 0);
+  // The floating action is keyboard accessible only while it is visible.
+  const dock = document.querySelector('.dock');
+  if (dock && 'IntersectionObserver' in window) {
+    const visibleSections = new Set();
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => entry.isIntersecting ? visibleSections.add(entry.target) : visibleSections.delete(entry.target));
+      const visible = visibleSections.size === 0;
+      dock.classList.toggle('is-visible', visible);
+      dock.setAttribute('aria-hidden', String(!visible));
+      dock.tabIndex = visible ? 0 : -1;
     });
-    blockers.forEach((el) => io.observe(el));
+    document.querySelectorAll('.hero, .story, .box, .adopt, .foot').forEach(section => observer.observe(section));
   }
-
-  initStory();
-  initReveals();
-  initDock();
 })();

@@ -4,40 +4,37 @@ A living German sourdough culture. One product: **THE ÂLF BOX**. One action: **
 
 ## Stack
 
-- Plain HTML, CSS and JavaScript. No framework, no build step, no dependencies, no webfonts.
-- Visual reference: edocheesecake.com (white, monospace headlines, black scrolling band, beige rounded buttons, floating pill).
-- Hosted on **Vercel** as a static site (`vercel.json`: clean URLs, cache and security headers).
+Plain HTML, CSS and JavaScript. No framework, build step, dependencies or webfonts.
+Vercel publishes `main` to https://souralf.com and creates previews for branches.
 
-## Structure
+## Design and photographs
 
-```
-index.html          the page: hero → band → meet ÂLF → transformation → statement → box → how it works → adopt
-styles.css          design system (white / ink / beige, system mono + sans, mobile first)
-app.js              scroll story, reveals, floating adopt button
-404.html            not-found page
-assets/og.jpg       1200×630 share image
-assets/icon.svg     favicon
-scripts/check.mjs   pre-push check (syntax, links, sizes, brand spelling)
-```
+A warm off-white canvas, charcoal, oversized monospace typography and the founder’s real sourdough photographs. The loaf opens the page; a four-moment scroll sequence follows the dough through its natural cracks to the baked crust.
 
-## Images
+Original photographs supplied by the owner:
 
-The site currently has **no images**, on purpose: typography only. Real product photos can be added later.
-No generated or AI imagery. Never.
+- `IMG_6159.jpeg` → `assets/dough-*.webp`
+- `IMG_6167.jpeg` → `assets/cracks-*.webp`
+- `IMG_6171.jpeg` → `assets/rise-*.webp`
+- `IMG_6182.jpeg` → `assets/bread-*.webp`
 
-## Local
+Each photo is encoded at 640px and 1152px widths for responsive delivery. Original content is preserved; metadata is removed from the web assets. Layout cropping is handled in CSS. No generated or AI imagery.
+
+The story uses four still photographs, not an invented continuous timelapse. Reduced motion, short screens and JavaScript disabled all receive a complete static gallery. The story also has labeled navigation buttons and a link to skip to the box.
+
+## Local checks
 
 ```bash
-python3 -m http.server 8000     # any static server
-node scripts/check.mjs          # run before every push
+python3 -m http.server 8000
+node scripts/check.mjs
 ```
 
-## Brand rule
+Verify desktop and mobile layouts, the four story moments, anchor navigation, keyboard focus, reduced motion and the email adoption link before merging.
 
-The name is always written **ÂLF**. `scripts/check.mjs` fails on any other spelling.
-Only technical slugs (the domain souralf.com, the Instagram handle) use plain letters.
+## Brand
+
+Always write **ÂLF**. Only technical slugs (domain, repo and Instagram handle) use plain letters.
 
 ## Conversion
 
-Every "Adopt ÂLF" button opens a pre-filled email (`mailto:`). Swap the address in `index.html`
-(search `mailto:`) when a dedicated inbox or checkout exists.
+Adoption buttons guide visitors to the final adoption section. Its button opens the existing prefilled email to brinkmannbuild@gmail.com. No checkout, price or availability is invented.
