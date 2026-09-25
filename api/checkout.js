@@ -5,7 +5,7 @@ const { stripe } = require("./_stripe");
 const PRODUCT = {
   name: "THE ÂLF BOX",
   description: "ÂLF · THE ÂLF METHOD · THE ÂLF JAR · THE ÂLF SPOON · THE ÂLF BIO FLOUR",
-  amount: 5900, // $59.00 in cents
+  amount: 8000, // $80.00 in cents
   currency: "usd",
 };
 
