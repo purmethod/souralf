@@ -519,7 +519,39 @@ a {
   }
 }
 
+/* ---------- thank you ---------- */
+
+.thanks {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 1.25rem;
+  min-height: 70vh;
+  min-height: 70svh;
+  padding: calc(var(--bar) + 3rem) var(--edge) 3rem;
+  text-align: center;
+}
+
+.thanks p:not(.box-kicker) {
+  max-width: 32ch;
+}
+
 /* ---------- product page ---------- */
+
+.checkout {
+  justify-self: stretch;
+  width: 100%;
+  min-height: 20rem;
+  margin-top: 0.5rem;
+  scroll-margin-top: calc(var(--bar) + 1rem);
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+[hidden] {
+  display: none !important;
+}
+
 
 .price {
   font-family: var(--mono);

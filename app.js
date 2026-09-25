@@ -87,18 +87,63 @@
     const out = document.querySelector(".qty-value");
     const link = document.querySelector(".adopt-link");
     if (!out || !link) return;
-    // Stripe Payment Link goes into data-checkout in box.html. Empty = adoption by email.
-    const checkout = link.dataset.checkout;
     const mail = link.getAttribute("href");
-    if (checkout) link.setAttribute("href", checkout);
     let n = 1;
     document.querySelectorAll(".qty-btn").forEach((btn) =>
       btn.addEventListener("click", () => {
         n = Math.min(9, Math.max(1, n + Number(btn.dataset.step)));
         out.textContent = String(n);
-        if (!checkout) link.setAttribute("href", mail.replace("Quantity%3A%201", `Quantity%3A%20${n}`));
+        link.setAttribute("href", mail.replace("Quantity%3A%201", `Quantity%3A%20${n}`));
       })
     );
+    initCheckout(link, () => n);
+  }
+
+  /* ---------- Stripe Embedded Checkout: payment stays on souralf.com ---------- */
+  // If Stripe is not reachable or not configured yet, the button keeps its email fallback.
+
+  function loadStripe() {
+    if (window.Stripe) return Promise.resolve(window.Stripe);
+    return new Promise((resolve, reject) => {
+      const s = document.createElement("script");
+      s.src = "https://js.stripe.com/v3/";
+      s.onload = () => (window.Stripe ? resolve(window.Stripe) : reject(new Error("Stripe unavailable")));
+      s.onerror = () => reject(new Error("Stripe unavailable"));
+      document.head.appendChild(s);
+    });
+  }
+
+  function initCheckout(link, quantity) {
+    const key = link.dataset.stripeKey;
+    const box = document.getElementById("checkout");
+    if (!key || !box || !window.fetch) return;
+    let busy = false;
+    link.addEventListener("click", async (event) => {
+      if (busy) return event.preventDefault();
+      event.preventDefault();
+      busy = true;
+      link.textContent = "One moment";
+      try {
+        const res = await fetch("/api/checkout", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ quantity: quantity() }),
+        });
+        if (!res.ok) throw new Error("checkout " + res.status);
+        const { clientSecret } = await res.json();
+        const Stripe = await loadStripe();
+        const checkout = await Stripe(key).initEmbeddedCheckout({ fetchClientSecret: async () => clientSecret });
+        document.querySelectorAll(".qty, .adopt-link").forEach((el) => (el.hidden = true));
+        box.hidden = false;
+        checkout.mount(box);
+        box.scrollIntoView({ behavior: motion.matches ? "auto" : "smooth", block: "start" });
+      } catch (err) {
+        window.location.href = link.getAttribute("href"); // email fallback
+      } finally {
+        busy = false;
+        link.textContent = "Adopt ÂLF";
+      }
+    });
   }
 
   initVideo();
