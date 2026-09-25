@@ -252,35 +252,9 @@ a {
 
 /* ---------- sections ---------- */
 
-.meet,
-.statement,
-.box,
-.how,
-.adopt {
-  padding: clamp(5rem, 16vw, 9rem) var(--edge);
-  text-align: center;
-}
-
 .section-head {
   max-width: 44rem;
   margin: 0 auto;
-}
-
-/* ---------- meet ---------- */
-
-.litany {
-  display: grid;
-  gap: 0.35em;
-  margin-top: 2.5rem;
-  font-family: var(--mono);
-  font-size: clamp(1.7rem, 7.4vw, 3.6rem);
-  letter-spacing: -0.03em;
-  line-height: 1.15;
-}
-
-.litany .turn {
-  margin-top: 0.9em;
-  color: var(--muted);
 }
 
 /* reveal (only when scripting is available) */
@@ -295,116 +269,10 @@ a {
   transform: none;
 }
 
-/* ---------- transformation ---------- */
-
-.transform {
-  color: var(--night-ink);
-  background: var(--night);
-  text-align: center;
-}
-
-.transform-stage {
-  display: grid;
-  gap: 3rem;
-  justify-items: center;
-  padding: clamp(5rem, 16vw, 9rem) var(--edge);
-}
-
-.steps {
-  display: grid;
-  gap: 2rem;
-}
-
-.step {
-  display: grid;
-  gap: 0.6rem;
-  justify-items: center;
-}
-
-.step-no {
-  color: var(--night-muted);
-  font-family: var(--mono);
-  font-size: 0.9rem;
-}
-
-.step-title {
-  font-family: var(--mono);
-  font-size: clamp(2.4rem, 11vw, 6.5rem);
-  letter-spacing: -0.03em;
-  line-height: 1.05;
-}
-
-.step-sub {
-  color: var(--night-muted);
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.meter {
-  display: none;
-}
-
-/* scroll-driven version */
-.js .transform {
-  height: 520vh;
-  height: 520svh;
-}
-
-.js .transform-stage {
-  position: sticky;
-  top: 0;
-  grid-template-rows: auto 1fr auto;
-  gap: 1rem;
-  height: 100vh;
-  height: 100svh;
-  padding-top: calc(var(--bar) + env(safe-area-inset-top) + 2rem);
-  padding-bottom: calc(2rem + env(safe-area-inset-bottom));
-  overflow: hidden;
-}
-
-.js .steps {
-  position: relative;
-  display: grid;
-  align-items: center;
-  width: 100%;
-}
-
-.js .step {
-  grid-area: 1 / 1;
-  opacity: 0;
-  transform: translateY(0.75rem);
-  transition: opacity 500ms var(--ease), transform 700ms var(--ease);
-}
-
-.js .step.is-active {
-  opacity: 1;
-  transform: none;
-}
-
-.js .meter {
-  display: block;
-  width: min(100%, 23rem);
-  height: 2px;
-  border-radius: 2px;
-  background: rgba(255, 255, 255, 0.18);
-}
-
-.meter span {
-  display: block;
-  width: 100%;
-  height: 100%;
-  border-radius: 2px;
-  background: var(--night-ink);
-  transform: scaleX(var(--p, 0));
-  transform-origin: 0 50%;
-}
-
 /* ---------- from ÂLF to bread ---------- */
 
 .proof {
-  padding: clamp(5rem, 16vw, 9rem) var(--edge);
+  padding: clamp(3.5rem, 12vw, 6rem) var(--edge) 0;
   text-align: center;
 }
 
@@ -448,134 +316,42 @@ a {
 /* ---------- statement ---------- */
 
 .statement {
-  border-top: 1px solid var(--line);
+  display: grid;
+  justify-items: center;
+  gap: 1.25rem;
+  padding: clamp(3.5rem, 12vw, 6rem) var(--edge);
+  text-align: center;
 }
 
 .statement .mono-lg {
   max-width: 14ch;
-  margin: 0 auto;
 }
 
 .attrib {
-  margin-top: 1.4rem;
+  margin-bottom: 1rem;
 }
 
 /* ---------- box ---------- */
 
 .box {
-  background: var(--beige);
+  display: grid;
+  justify-items: center;
+  gap: 1.25rem;
+  padding: clamp(3.5rem, 12vw, 6rem) var(--edge);
+  text-align: center;
 }
 
 .contents {
-  max-width: 34rem;
-  margin: 3rem auto 0;
-}
-
-.contents li {
   display: grid;
-  gap: 0.2rem;
-  padding: 1.35rem 0;
-  border-top: 1px solid var(--beige-deep);
+  gap: 0.35rem;
 }
 
-.contents li:last-child {
-  border-bottom: 1px solid var(--beige-deep);
-}
-
-.c-name {
-  font-family: var(--mono);
-  font-size: clamp(1.35rem, 5.6vw, 2rem);
-  letter-spacing: -0.02em;
-  line-height: 1.15;
-}
-
-.c-desc {
-  color: var(--muted);
-}
-
-.box-cta {
-  display: grid;
-  justify-items: center;
-  gap: 0.9rem;
-  margin-top: 2.5rem;
-}
-
-.box .button {
-  background: var(--paper);
-}
-
-.box .button:hover,
-.box .button:active {
-  background: var(--beige-deep);
-}
-
-.fine {
-  color: var(--muted);
-  font-size: 0.95rem;
-}
-
-/* ---------- how ---------- */
-
-.ritual {
-  display: grid;
-  gap: 2.5rem;
-  max-width: 60rem;
-  margin: 3rem auto 0;
-  counter-reset: ritual;
-}
-
-.ritual li {
-  counter-increment: ritual;
-}
-
-.ritual li::before {
-  content: "0" counter(ritual);
-  display: block;
-  margin-bottom: 0.6rem;
-  color: var(--muted);
-  font-family: var(--mono);
-  font-size: 0.85rem;
-}
-
-.ritual h3 {
-  font-family: var(--mono);
-  font-size: clamp(1.6rem, 7vw, 2.4rem);
-  font-weight: 400;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
-}
-
-.ritual p {
-  margin-top: 0.5rem;
-  color: var(--muted);
-}
-
-/* ---------- adopt ---------- */
-
-.adopt {
-  display: grid;
-  justify-items: center;
-  gap: 1.5rem;
-  border-top: 1px solid var(--line);
-}
-
-.adopt-copy {
-  max-width: 34ch;
-  font-size: 1.15rem;
-}
-
-.facts {
-  display: grid;
-  gap: 1.1rem;
-  max-width: 34rem;
-  margin-bottom: 0.75rem;
-}
-
-.facts dt {
+.contents b {
   font-weight: 700;
 }
 
-.facts dd {
+.fine {
+  margin-top: 0.5rem;
   color: var(--muted);
 }
 
@@ -666,9 +442,6 @@ a {
     overflow: visible;
   }
 
-  .ritual {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
 @media (min-width: 960px) {
@@ -692,10 +465,6 @@ a {
     font-size: clamp(3.5rem, 6vw, 6.5rem);
   }
 
-  .ritual {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

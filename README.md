@@ -11,9 +11,9 @@ A living German sourdough culture. One product: **THE ÂLF BOX**. One action: **
 ## Structure
 
 ```
-index.html          the page: hero → band → meet ÂLF → transformation → statement → box → how it works → adopt
+index.html          the page: hero → band → dough/risen/bread → quote + adopt → box → footer
 styles.css          design system (white / ink / beige, system mono + sans, mobile first)
-app.js              scroll story, reveals, floating adopt button
+app.js              reveals, floating adopt button
 404.html            not-found page
 assets/og.jpg       1200×630 share image
 assets/icon.svg     favicon
