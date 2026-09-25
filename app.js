@@ -1,77 +1,100 @@
-// ÂLF: reveals, floating adopt button, video, quantity. Vanilla, no dependencies.
+// ÂLF: the original photographs, one real moment at a time.
 (() => {
-  const doc = document.documentElement;
-  const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const shortScreen = window.matchMedia('(max-height: 650px)');
+  const story = document.querySelector('.story');
+  const frames = [...document.querySelectorAll('.story-frame')];
+  const controls = [...document.querySelectorAll('[data-moment]')];
+  let active = -1;
+  let enhanced = false;
+  let storyVisible = false;
 
-  const hasIO = "IntersectionObserver" in window;
-  if (!hasIO) doc.classList.remove("js");
-
-  /* ---------- reveals ---------- */
-
-  function initReveals() {
-    if (!hasIO || motion.matches) return;
-    const els = document.querySelectorAll(".shot, .statement .mono-lg, .box-block");
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (!e.isIntersecting) return;
-          e.target.classList.add("is-in");
-          io.unobserve(e.target);
-        });
-      },
-      { rootMargin: "0px 0px -8% 0px" }
-    );
-    els.forEach((el, i) => {
-      el.classList.add("reveal");
-      el.style.transitionDelay = `${(i % 5) * 70}ms`;
-      io.observe(el);
+  function syncVideo() {
+    story?.querySelectorAll('video').forEach(video => {
+      const visible = !enhanced || video.closest('.story-frame').classList.contains('is-active');
+      if (storyVisible && visible && !reducedMotion.matches) video.play().catch(() => {});
+      else video.pause();
     });
   }
 
-  /* ---------- floating adopt button: hidden where a CTA is already in view ---------- */
-
-  function initDock() {
-    const dock = document.querySelector(".dock");
-    const blockers = document.querySelectorAll(".hero, .statement, .box, .product, .foot");
-    if (!dock || !hasIO) return;
-    const showing = new Set();
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => (e.isIntersecting ? showing.add(e.target) : showing.delete(e.target)));
-      dock.classList.toggle("is-visible", showing.size === 0);
+  function selectMoment(index) {
+    if (active === index) return;
+    frames.forEach((frame, i) => {
+      frame.classList.toggle('is-active', i === index);
+      if (enhanced) frame.setAttribute('aria-hidden', String(i !== index));
+      else frame.removeAttribute('aria-hidden');
     });
-    blockers.forEach((el) => io.observe(el));
+    controls.forEach((button, i) => button.setAttribute('aria-pressed', String(i === index)));
+    active = index;
+    syncVideo();
   }
 
-  /* ---------- the ÂLF video: no motion for people who asked for none ---------- */
+  function configureStory() {
+    if (!story || !frames.length) return;
+    enhanced = !reducedMotion.matches && !shortScreen.matches;
+    story.classList.toggle('story-ready', enhanced);
+    active = -1;
+    if (enhanced) selectMoment(0);
+    else {
+      frames.forEach(frame => frame.removeAttribute('aria-hidden'));
+      selectMoment(0);
+    }
+  }
 
-  function initVideo() {
-    document.querySelectorAll("video[autoplay]").forEach((v) => {
-      if (motion.matches) {
-        v.removeAttribute("autoplay");
-        v.pause();
-      }
+  controls.forEach((button, index) => {
+    button.addEventListener('click', () => {
+      if (!enhanced) return;
+      selectMoment(index);
+    });
+  });
+  reducedMotion.addEventListener('change', configureStory);
+  shortScreen.addEventListener('change', configureStory);
+  configureStory();
+
+  if (story && 'IntersectionObserver' in window) {
+    const videoVisibility = new IntersectionObserver(entries => {
+      storyVisible = entries.some(entry => entry.isIntersecting);
+      syncVideo();
+    }, {threshold: 0.15});
+    videoVisibility.observe(story);
+  }
+
+  // Preserve the product page's quantity in the existing adoption email.
+  const quantity = document.querySelector('.qty-value');
+  const adoption = document.querySelector('.adopt-link');
+  if (quantity && adoption) {
+    const base = adoption.getAttribute('href');
+    let amount = 1;
+    document.querySelectorAll('.qty-btn').forEach(button => {
+      button.addEventListener('click', () => {
+        amount = Math.min(9, Math.max(1, amount + Number(button.dataset.step)));
+        quantity.textContent = String(amount);
+        adoption.setAttribute('href', base.replace('Quantity%3A%201', `Quantity%3A%20${amount}`));
+      });
     });
   }
 
-  /* ---------- product page: quantity goes into the adoption email ---------- */
-
-  function initQuantity() {
-    const out = document.querySelector(".qty-value");
-    const link = document.querySelector(".adopt-link");
-    if (!out || !link) return;
-    const base = link.getAttribute("href");
-    let n = 1;
-    document.querySelectorAll(".qty-btn").forEach((btn) =>
-      btn.addEventListener("click", () => {
-        n = Math.min(9, Math.max(1, n + Number(btn.dataset.step)));
-        out.textContent = String(n);
-        link.setAttribute("href", base.replace("Quantity%3A%201", `Quantity%3A%20${n}`));
-      })
-    );
+  // Fetch the remaining moments before they enter the photo stage.
+  if (story && 'IntersectionObserver' in window) {
+    const preload = new IntersectionObserver(entries => {
+      if (!entries.some(entry => entry.isIntersecting)) return;
+      story.querySelectorAll('img').forEach(image => { image.loading = 'eager'; });
+      preload.disconnect();
+    }, {rootMargin: '100% 0px'});
+    preload.observe(story);
   }
 
-  initVideo();
-  initQuantity();
-  initReveals();
-  initDock();
+  // The floating action is keyboard accessible only while it is visible.
+  const dock = document.querySelector('.dock');
+  if (dock && 'IntersectionObserver' in window) {
+    const visibleSections = new Set();
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => entry.isIntersecting ? visibleSections.add(entry.target) : visibleSections.delete(entry.target));
+      const visible = visibleSections.size === 0;
+      dock.classList.toggle('is-visible', visible);
+      dock.setAttribute('aria-hidden', String(!visible));
+      dock.tabIndex = visible ? 0 : -1;
+    });
+    document.querySelectorAll('.hero, .story, .box, .product, .foot').forEach(section => observer.observe(section));
+  }
 })();
