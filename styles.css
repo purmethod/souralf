@@ -485,8 +485,8 @@ a {
 @media (min-width: 720px) {
   .series {
     grid-auto-flow: row;
-    grid-template-columns: repeat(5, 1fr);
-    max-width: 90rem;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 72rem;
     margin: 0 auto;
     padding: 0;
     overflow: visible;
