@@ -20,6 +20,8 @@ Original photographs supplied by the owner:
 
 Each photo is encoded at 640px and 1152px widths for responsive delivery. Original content is preserved; metadata is removed from the web assets. Layout cropping is handled in CSS. No generated or AI imagery.
 
+The concurrently added JPEG variants in `assets/photos/` and the real-loaf `assets/og.jpg` share image are retained. The landing page uses the four original photos as responsive WebP assets; link previews use the existing landscape share image.
+
 The story uses four still photographs, not an invented continuous timelapse. Reduced motion, short screens and JavaScript disabled all receive a complete static gallery. The story also has labeled navigation buttons and a link to skip to the box.
 
 ## Local checks
