@@ -33,6 +33,18 @@
     <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
     <link rel="preload" as="image" href="assets/photos/bread-1080.jpg" imagesrcset="assets/photos/bread-720.jpg 720w, assets/photos/bread-1080.jpg 1080w" imagesizes="(min-width: 960px) 50vw, 100vw" />
     <link rel="stylesheet" href="styles.css?v=10" />
+    <style>
+      .band-message {
+        padding: 0 1rem;
+        color: #fff;
+        font-family: var(--sans);
+        font-size: clamp(0.8rem, 3vw, 1.1rem);
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        line-height: 1.4;
+        text-align: center;
+      }
+    </style>
     <script src="app.js?v=10" defer></script>
   </head>
   <body>
@@ -58,8 +70,8 @@
       </section>
 
       <!-- band -->
-      <div class="band" aria-hidden="true">
-        <div class="band-track"><span>Real Sourdough at Home,&nbsp;</span><span>From ÂLF to Bread,&nbsp;</span><span>Real Sourdough at Home,&nbsp;</span><span>From ÂLF to Bread,&nbsp;</span><span>Real Sourdough at Home,&nbsp;</span><span>From ÂLF to Bread,&nbsp;</span><span>Real Sourdough at Home,&nbsp;</span><span>From ÂLF to Bread,&nbsp;</span></div>
+      <div class="band">
+        <p class="band-message">REAL SOURDOUGH AT HOME</p>
       </div>
 
       <!-- ÂLF → dough → risen → bread: Paul's real video and photographs -->
