@@ -4,39 +4,43 @@ A living German sourdough culture. One product: **THE ÂLF BOX**. One action: **
 
 ## Stack
 
-Plain HTML, CSS and JavaScript. No framework, build step, dependencies or webfonts.
-Vercel publishes `main` to https://souralf.com and creates previews for branches.
+- Plain HTML, CSS and JavaScript. No framework, no build step, no dependencies, no webfonts.
+- Visual reference: edocheesecake.com (white, monospace headlines, black scrolling band, beige rounded buttons, floating pill).
+- Hosted on **Vercel** as a static site (`vercel.json`: clean URLs, cache and security headers).
 
-## Design and photographs
+## Structure
 
-A warm off-white canvas, charcoal, oversized monospace typography and the founder’s real sourdough photographs. The loaf opens the page; a compact interactive sequence with the existing starter video and four photographic moments follows the dough through its natural cracks to the baked crust.
-
-Original photographs supplied by the owner:
-
-- `IMG_6159.jpeg` → `assets/dough-*.webp`
-- `IMG_6167.jpeg` → `assets/cracks-*.webp`
-- `IMG_6171.jpeg` → `assets/rise-*.webp`
-- `IMG_6182.jpeg` → `assets/bread-*.webp`
-
-Each photo is encoded at 640px and 1152px widths for responsive delivery. Original content is preserved; metadata is removed from the web assets. Layout cropping is handled in CSS. No generated or AI imagery.
-
-The concurrently added JPEG variants in `assets/photos/` and the real-loaf `assets/og.jpg` share image are retained. The landing page uses the four original photos as responsive WebP assets; link previews use the existing landscape share image.
-
-The story preserves the original starter video, followed by four still photographs. Reduced motion, short screens and JavaScript disabled all receive a complete static gallery. The story has labeled navigation buttons and a link to skip to the box. It occupies one screen rather than pinning the visitor through a long scroll. The page follows the concurrent main-branch shortening: hero, band, media story, box, footer. The new video, product photographs, `/box` product page, quantity selection and sitemap entry are retained.
-
-## Local checks
-
-```bash
-python3 -m http.server 8000
-node scripts/check.mjs
+```
+index.html          home: hero → band → ÂLF video / dough / risen / bread → quote → box → footer
+box.html            product page (/box): box photo, contents, quantity, adopt (mailto for now)
+styles.css          design system (white / ink / beige, system mono + sans, mobile first)
+app.js              reveals, floating adopt button, video, quantity
+404.html            not-found page
+assets/og.jpg       1200×630 share image
+assets/icon.svg     favicon
+scripts/check.mjs   pre-push check (syntax, links, sizes, brand spelling)
 ```
 
-Verify desktop and mobile layouts, the video and four photo moments, product navigation, quantity controls, keyboard focus, reduced motion and the email adoption link before merging.
+## Images
 
-## Brand
+`assets/photos/` holds Paul's **real photographs** (dough → risen → bread), graded only:
+white balance, tone, contrast, crop to 4:5, light grain. Nothing generated, nothing added.
+Each file stays around 300 KB (720 px and 1080 px versions, served via `srcset`).
+No generated or AI imagery. Never.
 
-Always write **ÂLF**. Only technical slugs (domain, repo and Instagram handle) use plain letters.
+## Local
+
+```bash
+python3 -m http.server 8000     # any static server
+node scripts/check.mjs          # run before every push
+```
+
+## Brand rule
+
+The name is always written **ÂLF**. `scripts/check.mjs` fails on any other spelling.
+Only technical slugs (the domain souralf.com, the Instagram handle) use plain letters.
 
 ## Conversion
 
-Adoption buttons open the concurrently added `/box` product page. Its quantity control is preserved and its button opens the existing prefilled email to brinkmannbuild@gmail.com. No checkout, price or availability is invented.
+Every "Adopt ÂLF" button opens a pre-filled email (`mailto:`). Swap the address in `index.html`
+(search `mailto:`) when a dedicated inbox or checkout exists.

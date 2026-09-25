@@ -3,137 +3,127 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#f7f5ef" />
-    <title>ÂLF — Your living sourdough</title>
-    <meta name="description" content="Born in Germany. Made for your kitchen. Meet ÂLF, your living sourdough culture, and watch real dough become real bread. Adopt ÂLF." />
+    <meta name="theme-color" content="#ffffff" />
+    <title>ÂLF — A living German sourdough culture</title>
+    <meta name="description" content="Meet ÂLF. A living German sourdough culture. Feed ÂLF, watch ÂLF grow, bake real bread at home. Adopt ÂLF." />
     <link rel="canonical" href="https://souralf.com/" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="ÂLF" />
-    <meta property="og:title" content="ÂLF — Your living sourdough" />
-    <meta property="og:description" content="A little care. A lot of bread. Born in Germany. Made for your kitchen." />
+    <meta property="og:title" content="ÂLF" />
+    <meta property="og:description" content="A living German sourdough culture." />
     <meta property="og:url" content="https://souralf.com/" />
     <meta property="og:image" content="https://souralf.com/assets/og.jpg" />
-    <meta property="og:image:alt" content="A real loaf made with ÂLF, with a dark crust and natural flour-dusted cracks." />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="ÂLF — Your living sourdough" />
-    <meta name="twitter:description" content="Born in Germany. Made for your kitchen." />
+    <meta name="twitter:title" content="ÂLF" />
+    <meta name="twitter:description" content="A living German sourdough culture." />
     <meta name="twitter:image" content="https://souralf.com/assets/og.jpg" />
     <script type="application/ld+json">
-      {"@context":"https://schema.org","@type":"Product","name":"THE ÂLF BOX","description":"A living German sourdough culture, a first-loaf guide, a reusable glass jar, a wooden spoon made of German beech and whole grain rye flour.","brand":{"@type":"Brand","name":"ÂLF"},"url":"https://souralf.com/"}
+      {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": "THE ÂLF BOX",
+        "description": "ÂLF, a living German sourdough culture, with THE ÂLF METHOD (first-loaf guide included), a reusable glass jar, an original wooden spoon made of German beech and THE ÂLF BIO FLOUR (100% whole grain rye).",
+        "brand": { "@type": "Brand", "name": "ÂLF" },
+        "url": "https://souralf.com/"
+      }
     </script>
+    <script>document.documentElement.classList.add("js");</script>
     <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="styles.css?v=7" />
-    <script src="app.js?v=7" defer></script>
+    <link rel="preload" as="image" href="assets/photos/bread-1080.jpg" imagesrcset="assets/photos/bread-720.jpg 720w, assets/photos/bread-1080.jpg 1080w" imagesizes="(min-width: 960px) 50vw, 100vw" />
+    <link rel="stylesheet" href="styles.css?v=6" />
+    <script src="app.js?v=6" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
+
     <header class="bar">
-      <a class="monogram" href="#top" aria-label="ÂLF, back to top">ÂLF</a>
-      <nav aria-label="Main navigation">
-        <a class="bar-story" href="#transformation">The story</a>
-        <a class="bar-cta" href="/box">Adopt ÂLF <span aria-hidden="true">↗</span></a>
-      </nav>
+      <a class="monogram" href="#top" aria-label="ÂLF, back to top">Â</a>
+      <a class="bar-cta" href="/box">Adopt ÂLF</a>
     </header>
 
     <main id="main">
+      <!-- HERO -->
       <section class="hero" id="top" aria-labelledby="hero-title">
-        <div class="hero-copy">
-          <p class="eyebrow"><span class="live-dot" aria-hidden="true"></span> Born in Germany</p>
-          <h1 id="hero-title">ÂLF</h1>
-          <p class="hero-line">Your living<br /> sourdough.</p>
-          <p class="hero-note">A little care. A lot of bread.<br /> Bring a living culture into your kitchen.</p>
-          <a class="button button-dark" href="/box">Adopt ÂLF <span aria-hidden="true">↗</span></a>
-          <a class="hero-story" href="#transformation">Watch it come alive <span aria-hidden="true">↓</span></a>
-        </div>
         <figure class="hero-photo">
-          <img src="assets/bread-1152.webp" srcset="assets/bread-640.webp 640w, assets/bread-1152.webp 1152w" sizes="(min-width: 800px) 54vw, 100vw" width="1152" height="1536" fetchpriority="high" alt="The finished loaf: a rich brown crust with a wild pattern of flour-dusted cracks, resting on a cooling rack." />
-          <figcaption><span>The real thing.</span><span>Bread made with ÂLF</span></figcaption>
-          <a class="photo-link" href="#transformation" aria-label="See how this loaf began"><span aria-hidden="true">↓</span></a>
+          <img src="assets/photos/bread-1080.jpg" srcset="assets/photos/bread-720.jpg 720w, assets/photos/bread-1080.jpg 1080w" sizes="(min-width: 960px) 50vw, 100vw" width="1080" height="1350" alt="A loaf baked with ÂLF: rye crust, flour, natural cracks" fetchpriority="high" decoding="async" />
         </figure>
-        <div class="hero-bottom"><span>Living culture. German roots.</span><span>Yours to keep growing.</span></div>
+        <div class="hero-copy">
+          <p class="label">Born in Germany</p>
+          <h1 id="hero-title" class="mono-xl">ÂLF</h1>
+          <p class="hero-line">A living German sourdough culture.</p>
+          <a class="button" href="/box">Adopt ÂLF</a>
+        </div>
       </section>
 
+      <!-- band -->
       <div class="band" aria-hidden="true">
-        <div class="band-track">
-          <span>Real Sourdough at Home <i>✳</i> From ÂLF to Bread <i>✳</i> </span>
-          <span>Real Sourdough at Home <i>✳</i> From ÂLF to Bread <i>✳</i> </span>
-          <span>Real Sourdough at Home <i>✳</i> From ÂLF to Bread <i>✳</i> </span>
-          <span>Real Sourdough at Home <i>✳</i> From ÂLF to Bread <i>✳</i> </span>
-        </div>
+        <div class="band-track"><span>Real Sourdough at Home,&nbsp;</span><span>From ÂLF to Bread,&nbsp;</span><span>Real Sourdough at Home,&nbsp;</span><span>From ÂLF to Bread,&nbsp;</span><span>Real Sourdough at Home,&nbsp;</span><span>From ÂLF to Bread,&nbsp;</span><span>Real Sourdough at Home,&nbsp;</span><span>From ÂLF to Bread,&nbsp;</span></div>
       </div>
 
-      <section class="story" id="transformation" aria-labelledby="story-title">
-        <div class="story-stage">
-          <header class="story-head">
-            <div><p class="eyebrow">From ÂLF to bread</p><h2 id="story-title">Made by time.</h2></div>
-            <a href="#box" class="story-skip">Meet the box <span aria-hidden="true">↗</span></a>
-          </header>
-          <div class="story-frames">
-            <figure class="story-frame is-active" id="moment-0">
-              <video poster="assets/video/starter-poster.jpg" width="720" height="900" muted loop playsinline controls preload="metadata" aria-label="ÂLF, the living sourdough culture, full of bubbles">
-                <source src="assets/video/starter.mp4" type="video/mp4" />
-                <source src="assets/video/starter.webm" type="video/webm" />
-              </video>
-              <figcaption><span class="frame-number">00 / THE CULTURE</span><h3>It starts<br /> with life.</h3><p>Meet ÂLF.<br /> Your living sourdough culture.</p></figcaption>
-            </figure>
-            <figure class="story-frame" id="moment-1">
-              <img src="assets/dough-1152.webp" srcset="assets/dough-640.webp 640w, assets/dough-1152.webp 1152w" sizes="(min-width: 800px) 55vw, 100vw" width="1152" height="1536" loading="lazy" decoding="async" alt="Freshly shaped, flour-dusted dough on brown baking paper, before its surface opens." />
-              <figcaption><span class="frame-number">01 / THE BEGINNING</span><h3>A quiet<br /> beginning.</h3><p>Fresh dough. A dusting of flour.<br /> The rest takes time.</p></figcaption>
-            </figure>
-            <figure class="story-frame" id="moment-2">
-              <img src="assets/cracks-1152.webp" srcset="assets/cracks-640.webp 640w, assets/cracks-1152.webp 1152w" sizes="(min-width: 800px) 55vw, 100vw" width="1152" height="1536" loading="lazy" decoding="async" alt="A close view of the dough as the flour-covered surface separates into natural cracks." />
-              <figcaption><span class="frame-number">02 / THE CHANGE</span><h3>Something<br /> is happening.</h3><p>The surface opens.<br /> The dough tells its own story.</p></figcaption>
-            </figure>
-            <figure class="story-frame" id="moment-3">
-              <img src="assets/rise-1152.webp" srcset="assets/rise-640.webp 640w, assets/rise-1152.webp 1152w" sizes="(min-width: 800px) 55vw, 100vw" width="1152" height="1536" loading="lazy" decoding="async" alt="The risen loaf on baking paper with a fully developed network of natural cracks, ready for the oven." />
-              <figcaption><span class="frame-number">03 / THE RISE</span><h3>Its own<br /> kind of wild.</h3><p>A pattern you don’t draw.<br /> A loaf you can call your own.</p></figcaption>
-            </figure>
-            <figure class="story-frame" id="moment-4">
-              <img src="assets/bread-1152.webp" srcset="assets/bread-640.webp 640w, assets/bread-1152.webp 1152w" sizes="(min-width: 800px) 55vw, 100vw" width="1152" height="1536" loading="lazy" decoding="async" alt="The baked loaf on a cooling rack, its natural cracks now framed by a deep brown crust." />
-              <figcaption><span class="frame-number">04 / THE LOAF</span><h3>And then,<br /> bread.</h3><p>Deep crust. Flour-dusted ridges.<br /> This is what you came for.</p></figcaption>
-            </figure>
-          </div>
-          <div class="story-controls" aria-label="Choose a moment in the loaf’s story">
-            <button type="button" data-moment="0" aria-controls="moment-0" aria-pressed="true"><span>00</span> ÂLF</button>
-            <button type="button" data-moment="1" aria-controls="moment-1" aria-pressed="false"><span>01</span> Mix</button>
-            <button type="button" data-moment="2" aria-controls="moment-2" aria-pressed="false"><span>02</span> Rest</button>
-            <button type="button" data-moment="3" aria-controls="moment-3" aria-pressed="false"><span>03</span> Rise</button>
-            <button type="button" data-moment="4" aria-controls="moment-4" aria-pressed="false"><span>04</span> Bake</button>
-          </div>
-          <p class="story-credit">One living culture. Four real photographs. From our kitchen.</p>
+      <!-- ÂLF → dough → risen → bread: Paul's real video and photographs -->
+      <section class="proof" id="bread" aria-label="From ÂLF to bread">
+        <div class="series">
+          <figure class="shot">
+            <video poster="assets/video/starter-poster.jpg" width="720" height="900" autoplay muted loop playsinline preload="metadata" aria-label="ÂLF, the living sourdough culture, full of bubbles">
+              <source src="assets/video/starter.mp4" type="video/mp4" />
+              <source src="assets/video/starter.webm" type="video/webm" />
+            </video>
+          </figure>
+          <figure class="shot">
+            <img src="assets/photos/dough-720.jpg" srcset="assets/photos/dough-720.jpg 720w, assets/photos/dough-1080.jpg 1080w" sizes="(min-width: 720px) 25vw, 80vw" width="1080" height="1350" alt="Rye dough with ÂLF, before fermentation" loading="lazy" decoding="async" />
+          </figure>
+          <figure class="shot">
+            <img src="assets/photos/risen-720.jpg" srcset="assets/photos/risen-720.jpg 720w, assets/photos/risen-1080.jpg 1080w" sizes="(min-width: 720px) 25vw, 80vw" width="1080" height="1350" alt="The same dough, risen: the flour layer breaks open on its own" loading="lazy" decoding="async" />
+          </figure>
+          <figure class="shot">
+            <img src="assets/photos/bread-720.jpg" srcset="assets/photos/bread-720.jpg 720w, assets/photos/bread-1080.jpg 1080w" sizes="(min-width: 720px) 25vw, 80vw" width="1080" height="1350" alt="The finished loaf with its natural cracked crust" loading="lazy" decoding="async" />
+          </figure>
         </div>
       </section>
 
+      <!-- statement -->
+      <section class="statement" aria-label="Flour. Water. Time. Life.">
+        <p class="mono-lg">Flour. Water. Time. Life.</p>
+        <a class="button" href="/box">Adopt ÂLF</a>
+      </section>
+
+      <!-- THE ÂLF BOX -->
       <section class="box" id="box" aria-labelledby="box-title">
-        <div class="box-heading">
-          <p class="eyebrow">One box. Your beginning.</p>
-          <h2 id="box-title" class="mono-lg">The ÂLF<br /> Box.</h2>
-          <p class="box-description">A living culture.<br /> A few simple tools.<br /> Your first loaf starts here.</p>
-          <a class="button button-dark" href="/box">Adopt ÂLF <span aria-hidden="true">↗</span></a>
-          <a class="text-link box-instagram" href="https://www.instagram.com/sour.alf/" target="_blank" rel="noreferrer">Follow the story on Instagram ↗</a>
-        </div>
-        <div class="box-details">
-          <p class="eyebrow">Inside your box</p>
+        <div class="box-block">
+          <p class="box-kicker">ÂLF living sourdough culture</p>
+          <h2 id="box-title" class="box-title">The ÂLF Box</h2>
+          <p class="box-kicker">Included</p>
           <ul class="contents">
-            <li><span class="c-index" aria-hidden="true">01</span><div><h3>ÂLF</h3><p>Your living sourdough culture.</p></div><span class="c-symbol" aria-hidden="true">✳</span></li>
-            <li><span class="c-index" aria-hidden="true">02</span><div><h3>THE ÂLF METHOD</h3><p>A guide to your first loaf.</p></div></li>
-            <li><span class="c-index" aria-hidden="true">03</span><div><h3>THE ÂLF JAR</h3><p>Reusable glass. A home for ÂLF.</p></div></li>
-            <li><span class="c-index" aria-hidden="true">04</span><div><h3>THE ÂLF SPOON</h3><p>Wooden spoon. German beech.</p></div></li>
-            <li><span class="c-index" aria-hidden="true">05</span><div><h3>THE ÂLF BIO FLOUR</h3><p>100% whole grain rye.</p></div></li>
+            <li>ÂLF</li>
+            <li>THE ÂLF METHOD</li>
+            <li>THE ÂLF JAR</li>
+            <li>THE ÂLF SPOON</li>
+            <li>THE ÂLF BIO FLOUR<span>100% whole grain rye</span></li>
           </ul>
-          <p class="fine">Adoption by email. Availability on request.</p>
+          <a class="button" href="/box">Adopt ÂLF</a>
         </div>
       </section>
-
     </main>
 
     <footer class="foot">
-      <a class="monogram" href="#top" aria-label="ÂLF, back to top">ÂLF</a>
-      <p>Born in Germany. Made for your kitchen.</p>
+      <p class="monogram foot-mark" aria-label="ÂLF">Â</p>
+      <nav class="foot-icons" aria-label="Social">
+        <a href="https://www.instagram.com/sour.alf/" target="_blank" rel="noreferrer" aria-label="ÂLF on Instagram">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.4" cy="6.7" r="1.1" fill="currentColor"/></svg>
+        </a>
+        <a href="mailto:brinkmannbuild@gmail.com" aria-label="Email ÂLF">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M4 7l8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+        </a>
+      </nav>
       <p class="copy">© ÂLF 2026 · <a href="https://brinkmannpaul.com/" target="_blank" rel="noreferrer">brinkmann paul</a></p>
     </footer>
-    <a class="dock" href="/box" tabindex="-1" aria-hidden="true">Adopt ÂLF <span aria-hidden="true">↗</span></a>
+
+    <a class="dock" href="/box" tabindex="-1" aria-hidden="true">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c3 3 5 5.5 5 9a5 5 0 0 1-10 0c0-3.5 2-6 5-9z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+      Adopt ÂLF
+    </a>
+
   </body>
 </html>
