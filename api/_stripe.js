@@ -1,6 +1,9 @@
 // Minimal Stripe REST client for Vercel functions. No SDK, no dependencies.
 // STRIPE_SECRET_KEY lives only in Vercel's environment variables, never in the repo.
 const API = "https://api.stripe.com/v1/";
+// Pinned API version: the embedded Checkout parameters below are written against it,
+// so later Stripe renames cannot silently break the shop.
+const VERSION = "2024-06-20";
 
 function encode(params, prefix = "", out = []) {
   for (const [k, v] of Object.entries(params)) {
@@ -24,10 +27,11 @@ async function stripe(method, path, params) {
     headers: {
       Authorization: `Bearer ${key}`,
       "Content-Type": "application/x-www-form-urlencoded",
+      "Stripe-Version": VERSION,
     },
     body: method === "GET" ? undefined : encode(params || {}),
   });
-  const data = await res.json();
+  const data = await res.json().catch(() => ({}));
   if (!res.ok) {
     const err = new Error(data.error?.message || "Stripe request failed");
     err.status = res.status;

@@ -548,6 +548,17 @@ a {
   letter-spacing: normal;
 }
 
+.checkout-note {
+  justify-self: stretch;
+  padding: 0.9rem 1rem;
+  border-radius: 0.75rem;
+  color: #7a1f12;
+  background: #fbeae6;
+  font-size: 0.85rem;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
 [hidden] {
   display: none !important;
 }

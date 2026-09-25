@@ -7,7 +7,7 @@ import { execFileSync } from 'node:child_process';
 const root = path.resolve(import.meta.dirname, '..');
 const fail = [];
 
-for (const f of ['app.js', 'api/_stripe.js', 'api/checkout.js', 'api/session-status.js']) execFileSync(process.execPath, ['--check', path.join(root, f)]);
+for (const f of ['app.js', 'api/_stripe.js', 'api/checkout.js', 'api/session-status.js', 'api/health.js']) execFileSync(process.execPath, ['--check', path.join(root, f)]);
 
 for (const page of ['index.html', 'box.html', 'thanks.html', '404.html']) {
   const html = fs.readFileSync(path.join(root, page), 'utf8');

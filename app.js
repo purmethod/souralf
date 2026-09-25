@@ -116,29 +116,42 @@
   function initCheckout(link, quantity) {
     const key = link.dataset.stripeKey;
     const box = document.getElementById("checkout");
+    const note = document.getElementById("checkout-note");
     if (!key || !box || !window.fetch) return;
+    const testMode = key.startsWith("pk_test_");
     let busy = false;
     link.addEventListener("click", async (event) => {
-      if (busy) return event.preventDefault();
       event.preventDefault();
+      if (busy) return;
       busy = true;
       link.textContent = "One moment";
+      if (note) note.hidden = true;
       try {
         const res = await fetch("/api/checkout", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ quantity: quantity() }),
         });
-        if (!res.ok) throw new Error("checkout " + res.status);
-        const { clientSecret } = await res.json();
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || !data.clientSecret) throw new Error(data.error || `Checkout API ${res.status}`);
         const Stripe = await loadStripe();
-        const checkout = await Stripe(key).initEmbeddedCheckout({ fetchClientSecret: async () => clientSecret });
+        const stripe = Stripe(key);
+        const init = stripe.initEmbeddedCheckout || stripe.createEmbeddedCheckoutPage;
+        if (!init) throw new Error("Stripe.js has no embedded checkout");
+        const checkout = await init.call(stripe, { fetchClientSecret: async () => data.clientSecret });
         document.querySelectorAll(".qty, .adopt-link").forEach((el) => (el.hidden = true));
         box.hidden = false;
         checkout.mount(box);
         box.scrollIntoView({ behavior: motion.matches ? "auto" : "smooth", block: "start" });
       } catch (err) {
-        window.location.href = link.getAttribute("href"); // email fallback
+        console.error("ÂLF checkout:", err);
+        if (testMode && note) {
+          // Test mode: show the real reason so it can be fixed. Live mode: quietly use email.
+          note.textContent = "Checkout error: " + err.message + " · Check souralf.com/api/health";
+          note.hidden = false;
+        } else {
+          window.location.href = link.getAttribute("href");
+        }
       } finally {
         busy = false;
         link.textContent = "Adopt ÂLF";
