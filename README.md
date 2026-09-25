@@ -48,7 +48,7 @@ Only technical slugs (the domain souralf.com, the Instagram handle) use plain le
 The payment form is embedded on /box; the customer never leaves souralf.com.
 Set these in Vercel → Project → Settings → Environment Variables (never in the repo):
 
-- `STRIPE_SECRET_KEY`: the secret key (`sk_live_…`) of the same Stripe account as the `pk_live` key in box.html
+- `STRIPE_SECRET_KEY`: the secret key (`sk_live_…`) of the same Stripe account and mode as the publishable key in box.html (test: `sk_test_…` with `pk_test_…`)
 - `SHIPPING_COUNTRIES`: optional, e.g. `DE,AT,CH` (default `DE`)
 
 Without `STRIPE_SECRET_KEY` the button falls back to the adoption email.
