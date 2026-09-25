@@ -14,13 +14,12 @@ for (const page of ['index.html', '404.html']) {
   for (const [, ref] of html.matchAll(/(?:src|href)="([^"#]+)"/g)) {
     if (/^(https?:|mailto:|data:)/.test(ref)) continue;
     const file = path.join(root, ref.split('?')[0].replace(/^\//, '')) ;
-    if (ref.startsWith('assets/photos/')) continue; // real photographs are optional, the page renders without them
     if (ref === '/' ) continue;
     if (!fs.existsSync(file)) fail.push(`${page}: missing ${ref}`);
   }
 }
 
-for (const dir of ['assets', 'assets/photos']) {
+for (const dir of ['assets']) {
   for (const f of fs.readdirSync(path.join(root, dir))) {
     const st = fs.statSync(path.join(root, dir, f));
     if (st.isFile() && !f.endsWith('.md') && st.size > 400 * 1024) fail.push(`${dir}/${f} is ${Math.round(st.size / 1024)} KB (> 400 KB)`);

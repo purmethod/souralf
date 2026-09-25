@@ -31,8 +31,8 @@
     </script>
     <script>document.documentElement.classList.add("js");</script>
     <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="styles.css?v=2" />
-    <script src="app.js?v=2" defer></script>
+    <link rel="stylesheet" href="styles.css?v=3" />
+    <script src="app.js?v=3" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -45,11 +45,8 @@
     <main id="main">
       <!-- HERO -->
       <section class="hero" id="top" aria-labelledby="hero-title">
-        <figure class="hero-visual" aria-hidden="true">
-          <canvas class="surface" data-surface="alive" width="600" height="750"></canvas>
-          <figcaption class="live"><span class="pulse"></span>alive</figcaption>
-        </figure>
         <div class="hero-copy">
+          <p class="label">Born in Germany</p>
           <h1 id="hero-title" class="mono-xl">Meet ÂLF.</h1>
           <p class="hero-line">A living German sourdough culture.</p>
           <a class="button" href="mailto:brinkmannbuild@gmail.com?subject=ADOPT%20%C3%82LF&amp;body=I%20would%20like%20to%20adopt%20%C3%82LF.%0A%0AName%3A%0AShipping%20address%3A%0A">Adopt ÂLF</a>
@@ -80,9 +77,6 @@
       <section class="transform" id="transformation" aria-labelledby="transform-title">
         <div class="transform-stage">
           <h2 id="transform-title" class="label">The transformation</h2>
-          <div class="loaf-wrap" aria-hidden="true">
-            <canvas class="loaf" data-surface="loaf" width="560" height="560"></canvas>
-          </div>
           <ol class="steps" aria-label="From living culture to bread">
             <li class="step"><span class="step-no">01</span><span class="step-title">ÂLF wakes.</span></li>
             <li class="step"><span class="step-no">02</span><span class="step-title">Bubbles appear.</span></li>
@@ -94,34 +88,6 @@
             <li class="step"><span class="step-no">08</span><span class="step-title">Bread.</span></li>
           </ol>
           <div class="meter" aria-hidden="true"><span></span></div>
-        </div>
-      </section>
-
-      <!-- FROM ÂLF TO BREAD — real photographs are the source of truth -->
-      <section class="proof" id="bread" aria-labelledby="proof-title">
-        <header class="section-head">
-          <h2 id="proof-title" class="mono-lg">From ÂLF to bread.</h2>
-          <p class="lede">No knife. No decoration. The dough rises on its own and cracks where it wants to.</p>
-        </header>
-        <div class="triptych">
-          <figure class="shot" data-stage="0.1">
-            <div class="frame">
-              <img src="assets/photos/dough.jpg" alt="Rye dough with ÂLF, before fermentation" width="1200" height="1500" loading="lazy" decoding="async" />
-            </div>
-            <figcaption>01 Dough.</figcaption>
-          </figure>
-          <figure class="shot" data-stage="0.5">
-            <div class="frame">
-              <img src="assets/photos/risen.jpg" alt="The same dough after fermentation, risen" width="1200" height="1500" loading="lazy" decoding="async" />
-            </div>
-            <figcaption>02 Risen.</figcaption>
-          </figure>
-          <figure class="shot" data-stage="1">
-            <div class="frame">
-              <img src="assets/photos/bread.jpg" alt="The finished loaf with its natural, irregular cracked crust" width="1200" height="1500" loading="lazy" decoding="async" />
-            </div>
-            <figcaption>03 Bread.</figcaption>
-          </figure>
         </div>
       </section>
 
@@ -191,10 +157,5 @@
       Adopt ÂLF
     </a>
 
-    <noscript>
-      <style>
-        .hero-visual, .loaf-wrap, .meter { display: none; }
-      </style>
-    </noscript>
   </body>
 </html>

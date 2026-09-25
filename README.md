@@ -7,27 +7,23 @@ A living German sourdough culture. One product: **THE ÂLF BOX**. One action: **
 - Plain HTML, CSS and JavaScript. No framework, no build step, no dependencies, no webfonts.
 - Visual reference: edocheesecake.com (white, monospace headlines, black scrolling band, beige rounded buttons, floating pill).
 - Hosted on **Vercel** as a static site (`vercel.json`: clean URLs, cache and security headers).
-- The hero surface, the scroll transformation and the fallback stills are drawn live on `<canvas>`
-  by `app.js`: a procedural dough/crust renderer with no image downloads.
 
 ## Structure
 
 ```
-index.html          the page: hero → meet ÂLF → transformation → from ÂLF to bread → box → how it works → adopt
+index.html          the page: hero → band → meet ÂLF → transformation → statement → box → how it works → adopt
 styles.css          design system (white / ink / beige, system mono + sans, mobile first)
-app.js              living surface, scroll story, reveals, adopt dock
+app.js              scroll story, reveals, floating adopt button
 404.html            not-found page
 assets/og.jpg       1200×630 share image
 assets/icon.svg     favicon
-assets/photos/      THE REAL PRODUCT PHOTOS go here (see assets/photos/README.md)
 scripts/check.mjs   pre-push check (syntax, links, sizes, brand spelling)
 ```
 
-## Real photographs
+## Images
 
-The three original photos (dough before fermentation, risen dough, finished bread) are the source of truth.
-Drop them into `assets/photos/` as `dough.jpg`, `risen.jpg` and `bread.jpg`. They then replace the rendered
-stills in the "From ÂLF to bread" section automatically. There is no code change to make.
+The site currently has **no images**, on purpose: typography only. Real product photos can be added later.
+No generated or AI imagery. Never.
 
 ## Local
 
