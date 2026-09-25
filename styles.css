@@ -521,6 +521,13 @@ a {
 
 /* ---------- product page ---------- */
 
+.price {
+  font-family: var(--mono);
+  font-size: 1.5rem;
+  letter-spacing: 0;
+}
+
+
 .product {
   padding-top: calc(var(--bar) + env(safe-area-inset-top));
 }

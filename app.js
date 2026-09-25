@@ -87,13 +87,16 @@
     const out = document.querySelector(".qty-value");
     const link = document.querySelector(".adopt-link");
     if (!out || !link) return;
-    const base = link.getAttribute("href");
+    // Stripe Payment Link goes into data-checkout in box.html. Empty = adoption by email.
+    const checkout = link.dataset.checkout;
+    const mail = link.getAttribute("href");
+    if (checkout) link.setAttribute("href", checkout);
     let n = 1;
     document.querySelectorAll(".qty-btn").forEach((btn) =>
       btn.addEventListener("click", () => {
         n = Math.min(9, Math.max(1, n + Number(btn.dataset.step)));
         out.textContent = String(n);
-        link.setAttribute("href", base.replace("Quantity%3A%201", `Quantity%3A%20${n}`));
+        if (!checkout) link.setAttribute("href", mail.replace("Quantity%3A%201", `Quantity%3A%20${n}`));
       })
     );
   }
