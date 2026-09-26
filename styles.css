@@ -619,6 +619,18 @@ a {
   max-width: none;
 }
 
+.product-story {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.product-story .box-kicker {
+  letter-spacing: 0.04em;
+}
+
 .qty {
   display: inline-flex;
   align-items: center;
