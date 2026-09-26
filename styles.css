@@ -622,12 +622,13 @@ a {
 .product-story {
   display: grid;
   gap: 1rem;
+  max-width: 40ch;
   margin-top: 1.5rem;
-  text-transform: none;
-  letter-spacing: normal;
-}
-
-.product-story .box-kicker {
+  color: var(--muted);
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
   letter-spacing: 0.04em;
 }
 
