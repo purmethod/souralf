@@ -10,7 +10,7 @@
 
   function initReveals() {
     if (!hasIO || motion.matches) return;
-    const els = document.querySelectorAll(".shot, .statement-line, .box-block");
+    const els = document.querySelectorAll(".story > *, .shot, .statement-line, .box-block");
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
@@ -26,6 +26,19 @@
       el.style.transitionDelay = `${(i % 5) * 70}ms`;
       io.observe(el);
     });
+  }
+
+  /* ---------- header: transparent over the hero video, solid once you scroll past ---------- */
+
+  function initBar() {
+    const bar = document.querySelector(".bar");
+    const hero = document.querySelector(".hero");
+    if (!bar || !hero || !hasIO) return;
+    bar.classList.add("on-hero");
+    new IntersectionObserver(
+      ([e]) => bar.classList.toggle("on-hero", e.isIntersecting),
+      { rootMargin: `-${bar.offsetHeight}px 0px 0px 0px` }
+    ).observe(hero);
   }
 
   /* ---------- floating adopt button: hidden where a CTA is already in view ---------- */
@@ -212,6 +225,7 @@
     });
   }
 
+  initBar();
   initVideo();
   initProduct();
   initReveals();
