@@ -1,4 +1,4 @@
-// ÂLF: reveals, floating adopt button, video, quantity. Vanilla, no dependencies.
+// ÂLF: reveals, floating adopt button, videos, product page + checkout. Vanilla, no dependencies.
 (() => {
   const doc = document.documentElement;
   const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -42,61 +42,100 @@
     blockers.forEach((el) => io.observe(el));
   }
 
-  /* ---------- videos: play when visible, tap to pause/play ---------- */
-  // iPhones in Low Power Mode block autoplay: then a play mark shows and one tap starts it.
+  /* ---------- videos: load just before they scroll in, play only while really on screen ---------- */
+  // Fewer videos decoding at once = smooth playback on phones. Low Power Mode blocks autoplay:
+  // then a play mark shows and one tap starts the video. A tap never pauses by accident.
 
   function initVideo() {
     const vids = [...document.querySelectorAll("video.loop")];
     if (!vids.length) return;
-    // The play mark shows only when the phone blocked autoplay or the viewer paused by tap,
-    // never for our own off-screen pause.
     const mark = (v, on) => v.parentElement.classList.toggle("is-paused", on);
     const tryPlay = (v) => {
+      if (!v.paused) return;
       v.muted = true;
       const p = v.play();
       if (p && p.catch) p.catch(() => mark(v, true));
     };
     vids.forEach((v) => {
-      v.addEventListener("play", () => mark(v, false));
-      v.parentElement.addEventListener("click", () => {
-        if (v.paused) {
-          v.dataset.held = "";
-          tryPlay(v);
-        } else {
-          v.dataset.held = "1";
-          v.pause();
-          mark(v, true);
-        }
-      });
+      v.addEventListener("playing", () => mark(v, false));
+      v.parentElement.addEventListener("click", () => tryPlay(v));
     });
     if (!hasIO) return vids.forEach(tryPlay);
-    const io = new IntersectionObserver(
+
+    const warm = new IntersectionObserver(
       (entries) =>
         entries.forEach((e) => {
-          if (!e.isIntersecting) e.target.pause();
-          else if (!e.target.dataset.held) tryPlay(e.target);
+          if (!e.isIntersecting) return;
+          const v = e.target;
+          if (v.preload !== "auto") {
+            v.preload = "auto";
+            if (v.readyState < 2) v.load();
+          }
+          warm.unobserve(v);
         }),
-      { threshold: 0.2 }
+      { rootMargin: "100% 50%" }
     );
-    vids.forEach((v) => io.observe(v));
+    const onScreen = new Set();
+    const play = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((e) => {
+          const v = e.target;
+          if (e.intersectionRatio >= 0.5) {
+            onScreen.add(v);
+            tryPlay(v);
+          } else {
+            onScreen.delete(v);
+            if (!v.paused) v.pause();
+          }
+        }),
+      { threshold: [0, 0.5, 1] }
+    );
+    vids.forEach((v) => {
+      warm.observe(v);
+      play.observe(v);
+    });
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden) onScreen.forEach(tryPlay);
+    });
   }
 
-  /* ---------- product page: quantity goes into the adoption email ---------- */
+  /* ---------- product page: shipping zone + quantity → live total, email fallback, checkout ---------- */
 
-  function initQuantity() {
+  const eur = (cents) => "€" + (cents % 100 ? (cents / 100).toFixed(2) : String(cents / 100));
+
+  function initProduct() {
     const out = document.querySelector(".qty-value");
     const link = document.querySelector(".adopt-link");
-    if (!out || !link) return;
+    const price = document.querySelector(".price[data-unit]");
+    if (!out || !link || !price) return;
+    const unit = Number(price.dataset.unit);
+    const total = document.querySelector(".total-value");
     const mail = link.getAttribute("href");
-    let n = 1;
+    const state = { qty: 1, ship: null };
+    const zone = () => document.querySelector('input[name="shipping"]:checked');
+
+    function update() {
+      const z = zone();
+      state.ship = z ? z.value : null;
+      const shipCents = z ? Number(z.dataset.amount) : 0;
+      out.textContent = String(state.qty);
+      if (total) total.textContent = eur(unit * state.qty + shipCents);
+      link.setAttribute(
+        "href",
+        mail
+          .replace("Quantity%3A%201", `Quantity%3A%20${state.qty}`)
+          .replace("Shipping%3A%20Germany", `Shipping%3A%20${encodeURIComponent(z ? z.dataset.label : "")}`)
+      );
+    }
     document.querySelectorAll(".qty-btn").forEach((btn) =>
       btn.addEventListener("click", () => {
-        n = Math.min(9, Math.max(1, n + Number(btn.dataset.step)));
-        out.textContent = String(n);
-        link.setAttribute("href", mail.replace("Quantity%3A%201", `Quantity%3A%20${n}`));
+        state.qty = Math.min(9, Math.max(1, state.qty + Number(btn.dataset.step)));
+        update();
       })
     );
-    initCheckout(link, () => n);
+    document.querySelectorAll('input[name="shipping"]').forEach((r) => r.addEventListener("change", update));
+    update();
+    initCheckout(link, state);
   }
 
   /* ---------- Stripe Embedded Checkout: payment stays on souralf.com ---------- */
@@ -113,13 +152,25 @@
     });
   }
 
-  function initCheckout(link, quantity) {
+  function initCheckout(link, state) {
     const key = link.dataset.stripeKey;
     const box = document.getElementById("checkout");
     const note = document.getElementById("checkout-note");
     if (!key || !box || !window.fetch) return;
     const testMode = key.startsWith("pk_test_");
+    const chooser = [...document.querySelectorAll(".ship, .buy-row, .adopt-link")];
+    const back = document.getElementById("checkout-back");
+    let active = null;
     let busy = false;
+    if (back)
+      back.addEventListener("click", () => {
+        if (active) active.destroy();
+        active = null;
+        box.hidden = true;
+        back.hidden = true;
+        chooser.forEach((el) => (el.hidden = false));
+        link.scrollIntoView({ behavior: motion.matches ? "auto" : "smooth", block: "center" });
+      });
     link.addEventListener("click", async (event) => {
       event.preventDefault();
       if (busy) return;
@@ -130,7 +181,7 @@
         const res = await fetch("/api/checkout", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ quantity: quantity() }),
+          body: JSON.stringify({ quantity: state.qty, shipping: state.ship }),
         });
         const data = await res.json().catch(() => ({}));
         if (!res.ok || !data.clientSecret) throw new Error(data.error || `Checkout API ${res.status}`);
@@ -138,10 +189,12 @@
         const stripe = Stripe(key);
         const init = stripe.initEmbeddedCheckout || stripe.createEmbeddedCheckoutPage;
         if (!init) throw new Error("Stripe.js has no embedded checkout");
-        const checkout = await init.call(stripe, { fetchClientSecret: async () => data.clientSecret });
-        document.querySelectorAll(".qty, .adopt-link").forEach((el) => (el.hidden = true));
+        if (active) active.destroy();
+        active = await init.call(stripe, { fetchClientSecret: async () => data.clientSecret });
+        chooser.forEach((el) => (el.hidden = true));
+        if (back) back.hidden = false;
         box.hidden = false;
-        checkout.mount(box);
+        active.mount(box);
         box.scrollIntoView({ behavior: motion.matches ? "auto" : "smooth", block: "start" });
       } catch (err) {
         console.error("ÂLF checkout:", err);
@@ -160,7 +213,7 @@
   }
 
   initVideo();
-  initQuantity();
+  initProduct();
   initReveals();
   initDock();
 })();

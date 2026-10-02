@@ -9,7 +9,7 @@ const fail = [];
 
 for (const f of ['app.js', 'api/_stripe.js', 'api/checkout.js', 'api/session-status.js', 'api/health.js']) execFileSync(process.execPath, ['--check', path.join(root, f)]);
 
-for (const page of ['index.html', 'box.html', 'thanks.html', '404.html']) {
+for (const page of ['index.html', 'adopt.html', 'thanks.html', '404.html']) {
   const html = fs.readFileSync(path.join(root, page), 'utf8');
   for (const [, ref] of html.matchAll(/(?:src|href)="([^"#]+)"/g)) {
     if (/^(https?:|mailto:|data:)/.test(ref)) continue;
@@ -19,10 +19,11 @@ for (const page of ['index.html', 'box.html', 'thanks.html', '404.html']) {
   }
 }
 
-for (const dir of ['assets']) {
+for (const dir of ['assets', 'assets/video']) {
   for (const f of fs.readdirSync(path.join(root, dir))) {
     const st = fs.statSync(path.join(root, dir, f));
-    if (st.isFile() && !f.endsWith('.md') && st.size > 400 * 1024) fail.push(`${dir}/${f} is ${Math.round(st.size / 1024)} KB (> 400 KB)`);
+    const cap = f.endsWith('.mp4') ? 3000 : 400; // videos: 3 MB, everything else 400 KB
+    if (st.isFile() && !f.endsWith('.md') && st.size > cap * 1024) fail.push(`${dir}/${f} is ${Math.round(st.size / 1024)} KB (> ${cap} KB)`);
   }
 }
 

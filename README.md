@@ -11,8 +11,9 @@ A living German sourdough culture. One product: **THE ÂLF BOX**. One action: **
 ## Structure
 
 ```
-index.html          home: hero → band → ÂLF video / dough / risen / bread → quote → box → footer
-box.html            product page (/box): box photo, $59, quantity, embedded Stripe checkout
+index.html          home: hero video → band → three videos → Flour. Water. Time. → ÂLF €19 + Why ÂLF → footer
+adopt.html          product page (/adopt): ÂLF €19, DHL shipping zone, quantity, embedded Stripe checkout
+shop.json           product, price and shipping rates: the one place to change them
 thanks.html         after payment (/thanks)
 api/checkout.js     Vercel function: creates the embedded Checkout Session (price set here)
 api/session-status.js  Vercel function: status for the thank-you page
@@ -45,13 +46,14 @@ Only technical slugs (the domain souralf.com, the Instagram handle) use plain le
 
 ## Payment (Stripe Embedded Checkout)
 
-The payment form is embedded on /box; the customer never leaves souralf.com.
+The payment form is embedded on /adopt; the customer never leaves souralf.com.
 Set these in Vercel → Project → Settings → Environment Variables (never in the repo):
 
-- `STRIPE_SECRET_KEY`: the secret key (`sk_live_…`) of the same Stripe account and mode as the publishable key in box.html (test: `sk_test_…` with `pk_test_…`)
-- `SHIPPING_COUNTRIES`: optional, e.g. `DE,AT,CH` (default `DE`)
+- `STRIPE_SECRET_KEY`: the secret key (`sk_live_…`) of the same Stripe account and mode as the publishable key in adopt.html (test: `sk_test_…` with `pk_test_…`)
 
 Without `STRIPE_SECRET_KEY` the button falls back to the adoption email.
+
+Shipping zones and prices (DHL Paket with tracking: Germany, EU, worldwide) are in `shop.json`.
 
 ## Conversion
 

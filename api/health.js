@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
   const out = {
     secret_key_set: Boolean(key),
     secret_key_mode: key.startsWith("sk_live_") ? "live" : key.startsWith("sk_test_") ? "test" : key ? "unknown (must start with sk_test_ or sk_live_)" : null,
-    shipping_countries: process.env.SHIPPING_COUNTRIES || "DE (default)",
+    shipping_zones: require("../shop.json").shipping.map((z) => `${z.label} ${(z.amount / 100).toFixed(2)}`),
     keys_match_same_account: pk && key ? account(pk) === account(key) : null,
     keys_match_same_mode: pk && key ? pk.split("_")[1] === key.split("_")[1] : null,
     stripe_reachable: null,
