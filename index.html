@@ -38,7 +38,7 @@
     <style>
       .band-message {
         padding: 0 1rem;
-        color: #fff;
+        color: #3a3a3a;
         font-family: var(--sans);
         font-size: clamp(0.8rem, 3vw, 1.1rem);
         font-weight: 700;
@@ -46,6 +46,8 @@
         line-height: 1.4;
         text-align: center;
       }
+      .band-item { display: inline-flex; align-items: center; gap: 0.6rem; }
+      .band-item span[aria-hidden] { color: var(--crust); }
       .hero-copy {
         container-type: inline-size;
         min-width: 0;
@@ -82,7 +84,7 @@
       </section>
 
       <div class="band">
-        <p class="band-message"><span>Real sourdough at home</span><span aria-hidden="true">✦</span><span>Shipped worldwide</span></p>
+        <p class="band-message"><span class="band-item"><span aria-hidden="true">✦</span><span>Real sourdough at home</span><span aria-hidden="true">✦</span></span><span class="band-item"><span aria-hidden="true">✦</span><span>Shipped worldwide</span><span aria-hidden="true">✦</span></span></p>
       </div>
 
       <!-- WHY ÂLF -->
