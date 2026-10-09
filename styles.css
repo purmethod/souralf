@@ -210,6 +210,11 @@ a {
   font-size: 2rem;
   line-height: 1;
   text-decoration: none;
+  /* 44px tap target around the single letter */
+  display: inline-grid;
+  place-items: center;
+  min-width: 44px;
+  min-height: 44px;
 }
 
 .bar-cta {
@@ -546,6 +551,9 @@ a {
 }
 
 .copy-founder a {
+  display: inline-block;
+  padding-block: 0.6rem;
+  margin-block: -0.6rem;
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.2em;

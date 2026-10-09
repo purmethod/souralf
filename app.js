@@ -86,7 +86,9 @@
           }
           warm.unobserve(v);
         }),
-      { rootMargin: "100% 50%" }
+      // warm up a little over half a screen ahead: early enough to be ready, late enough
+      // that the first load stays light (the three story videos sit two screens down)
+      { rootMargin: "60% 0px" }
     );
     const onScreen = new Set();
     const play = new IntersectionObserver(
