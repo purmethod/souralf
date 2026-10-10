@@ -370,6 +370,8 @@ a {
   scroll-padding: 0 var(--edge);
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
+  /* A sideways swipe moves the videos, never the browser's back gesture. */
+  overscroll-behavior-x: contain;
 }
 
 .series::-webkit-scrollbar {
@@ -388,6 +390,14 @@ a {
   aspect-ratio: 4 / 5;
   object-fit: cover;
   background: var(--cream);
+}
+
+/* On iPhone a video takes the touch for itself, so a swipe that starts on
+   it stutters. The touch goes through to the row instead; a tap still
+   lands on the figure, which starts a paused video. No long-press menu. */
+.shot video {
+  pointer-events: none;
+  -webkit-touch-callout: none;
 }
 
 .shot figcaption {
